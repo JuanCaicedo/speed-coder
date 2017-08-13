@@ -1,19 +1,32 @@
 import React from 'react'
-const state = {
-  nextKey: 'f'
-}
+import withRedux from 'next-redux-wrapper'
+import { initStore } from '../store'
 
 class Index extends React.Component {
 
   componentDidMount() {
     window.onkeyup = (e) => {
       const key = e.keyCode ? e.keyCode : e.which
-      console.log("key", key)
     }
   }
 
   render() {
-    return <div>{state.nextKey}</div>
+    const { nextKey, alreadyTyped, text } = this.props
+    return (
+      <div>
+        <div>nextKey: { nextKey }</div>
+        <div>alreadyTyped: { alreadyTyped }</div>
+        <div>text: { text }</div>
+      </div>
+    )
   }
 }
-export default Index
+
+const mapStateToProps = (state) => {
+  return {
+    nextKey: state.nextKey,
+    text: state.text
+  }
+}
+
+export default withRedux(initStore, mapStateToProps)(Index)
