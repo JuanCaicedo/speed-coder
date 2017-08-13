@@ -10,6 +10,7 @@
   "keywords": [],
   "author": "Juan Caicedo <retiredcanadianpoet@gmail.com>",
   "dependencies": {
+    "keycode": "^2.1.9",
     "next": "3.0.3",
     "next-redux-wrapper": "^1.3.2",
     "react": "15.6.1",

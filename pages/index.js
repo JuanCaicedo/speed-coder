@@ -22,7 +22,8 @@ class Index extends React.Component {
 const mapStateToProps = (state) => {
   return {
     nextKey: state.nextKey,
-    text: state.text
+    text: state.text,
+    alreadyTyped: state.alreadyTyped
   }
 }
 

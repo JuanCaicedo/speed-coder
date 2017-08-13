@@ -1,13 +1,14 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import keycode from 'keycode'
 import { recordKey } from '../store'
 
 class KeyListener extends React.Component {
   componentDidMount() {
     window.onkeyup = (e) => {
-      const code = e.keyCode ? e.keyCode : e.which
-      this.props.recordKey(code)
+      const key = keycode(e)
+      this.props.recordKey(key)
     }
   }
 
