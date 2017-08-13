@@ -1,7 +1,9 @@
+const state = {
+  nextKey: 'f'
+}
+
 const Index = () => (
-  <div>
-    <p>Hello World</p>
-  </div>
+  <div>{state.nextKey}</div>
 )
 
 export default Index
