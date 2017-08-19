@@ -2,7 +2,7 @@ import React from 'react'
 import withRedux from 'next-redux-wrapper'
 import { initStore } from '../store'
 import KeyListener from '../components/key-listener'
-
+import Character from '../components/character'
 
 class Index extends React.Component {
 
@@ -13,7 +13,7 @@ class Index extends React.Component {
         <KeyListener />
         <div>nextKey: { nextKey }</div>
         <div>alreadyTyped: { alreadyTyped }</div>
-        <div>text: { text }</div>
+        { text.split('').map(Character) }
       </div>
     )
   }
