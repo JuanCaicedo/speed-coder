@@ -1,6 +1,5 @@
-const Character = (letter, idx) => {
-  const key = letter + idx
-  return <span key={key}>{letter}</span>
+const Character = ({ key, isCurrent}, idx) => {
+  return <div key={idx}>{key} {isCurrent.toString()} </div>
 }
 
 export default Character

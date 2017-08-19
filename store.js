@@ -7,9 +7,13 @@ const actionTypes = {
 }
 
 const exampleInitialState = {
-  nextKey: 'c',
-  alreadyTyped: '',
-  text: 'console.log()'
+  characters: [{
+    key: 'c',
+    isCurrent: false
+  }, {
+    key: 'o',
+    isCurrent: true
+  }]
 }
 
 const reducer = (state = exampleInitialState, action) => {

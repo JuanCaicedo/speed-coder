@@ -7,13 +7,10 @@ import Character from '../components/character'
 class Index extends React.Component {
 
   render() {
-    const { nextKey, alreadyTyped, text } = this.props
+    const { characters } = this.props
     return (
       <div>
-        <KeyListener />
-        <div>nextKey: { nextKey }</div>
-        <div>alreadyTyped: { alreadyTyped }</div>
-        { text.split('').map(Character) }
+        { characters.map(Character) }
       </div>
     )
   }
@@ -21,9 +18,7 @@ class Index extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    nextKey: state.nextKey,
-    text: state.text,
-    alreadyTyped: state.alreadyTyped
+    characters: state.characters
   }
 }
 
