@@ -9,8 +9,10 @@ const actionTypes = {
 const exampleInitialState = {
   characters: [{
     key: 'c',
+    wasCorrect: true
   }, {
     key: 'o',
+    wasCorrect: false
   },{
     key: 'n',
   },{
@@ -34,7 +36,7 @@ const exampleInitialState = {
   },{
     key: ')',
   }],
-  currentIndex: 1
+  currentIndex: 2
 }
 
 const reducer = (state = exampleInitialState, action) => {
