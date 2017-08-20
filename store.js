@@ -43,7 +43,8 @@ const reducer = (state = exampleInitialState, action) => {
   const { characters, currentIndex } = state
   switch (action.type) {
     case actionTypes.RECORD:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         currentIndex: currentIndex + 1,
         characters: [
           ...characters.slice(0, currentIndex),
@@ -53,7 +54,7 @@ const reducer = (state = exampleInitialState, action) => {
           },
           ...characters.slice(currentIndex + 1)
         ]
-      })
+      }
     default:
       return state
   }
