@@ -39,21 +39,27 @@ const exampleInitialState = {
   currentIndex: 2
 }
 
+const increaseIndex = (index) => (index + 1)
+
+const addCharacter = (characters, pressedKey, currentIndex) => (
+  [
+    ...characters.slice(0, currentIndex),
+    {
+      key: characters[currentIndex].key,
+      wasCorrect: pressedKey === characters[currentIndex].key
+    },
+    ...characters.slice(currentIndex + 1)
+  ]
+)
+
 const reducer = (state = exampleInitialState, action) => {
   const { characters, currentIndex } = state
   switch (action.type) {
     case actionTypes.RECORD:
       return {
         ...state,
-        currentIndex: currentIndex + 1,
-        characters: [
-          ...characters.slice(0, currentIndex),
-          {
-            key: characters[currentIndex].key,
-            wasCorrect: action.key === characters[currentIndex].key
-          },
-          ...characters.slice(currentIndex + 1)
-        ]
+        currentIndex: increaseIndex(currentIndex),
+        characters: addCharacter(characters, action.key, currentIndex)
       }
     default:
       return state
