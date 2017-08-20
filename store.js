@@ -9,44 +9,32 @@ const actionTypes = {
 const exampleInitialState = {
   characters: [{
     key: 'c',
-    isCurrent: false
   }, {
     key: 'o',
-    isCurrent: true
   },{
     key: 'n',
-    isCurrent: false
   },{
     key: 's',
-    isCurrent: false
   },{
     key: 'o',
-    isCurrent: false
   },{
     key: 'l',
-    isCurrent: false
   },{
     key: 'e',
-    isCurrent: false
   },{
     key: '.',
-    isCurrent: false
   },{
     key: 'l',
-    isCurrent: false
   },{
     key: 'o',
-    isCurrent: false
   },{
     key: 'g',
-    isCurrent: false
   },{
     key: '(',
-    isCurrent: false
   },{
     key: ')',
-    isCurrent: false
-  }]
+  }],
+  currentIndex: 1
 }
 
 const reducer = (state = exampleInitialState, action) => {

@@ -13,10 +13,10 @@ const Container = styled.div`
 class Index extends React.Component {
 
   render() {
-    const { characters } = this.props
+    const { characters, currentIndex } = this.props
     return (
       <Container>
-        { characters.map(Character) }
+        { characters.map(Character(currentIndex)) }
       </Container>
     )
   }
@@ -24,7 +24,8 @@ class Index extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    characters: state.characters
+    characters: state.characters,
+    currentIndex: state.currentIndex
   }
 }
 

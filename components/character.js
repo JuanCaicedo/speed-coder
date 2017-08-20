@@ -1,17 +1,20 @@
 import styled from 'styled-components'
 
 const StyledCharacter = styled.span`
-  &.selected-character {
+  &.current-character {
     text-decoration: underline;
     color: blue;
   }
 `
 
-const Character = ({ key, isCurrent}, idx) => (
-  <StyledCharacter key={idx}
-                   className={ isCurrent ? 'selected-character' : '' } >
-    {key}
-  </StyledCharacter>
-)
+const Character = (currentIndex) => ({ key }, idx) => {
+  const currentClass = currentIndex === idx ? 'current-character' : '';
+  return (
+    <StyledCharacter key={idx}
+                     className={currentClass} >
+      {key}
+    </StyledCharacter>
+  )
+}
 
 export default Character
