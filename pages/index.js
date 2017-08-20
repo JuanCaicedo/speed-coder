@@ -16,6 +16,7 @@ class Index extends React.Component {
     const { characters, currentIndex } = this.props
     return (
       <Container>
+        <KeyListener />
         { characters.map(Character(currentIndex)) }
       </Container>
     )

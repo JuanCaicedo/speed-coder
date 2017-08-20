@@ -41,7 +41,7 @@ const reducer = (state = exampleInitialState, action) => {
   switch (action.type) {
     case actionTypes.RECORD:
       return Object.assign({}, state, {
-        alreadyTyped: state.alreadyTyped + action.key
+        currentIndex: state.currentIndex + 1
       })
     default:
       return state
