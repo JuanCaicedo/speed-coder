@@ -40,10 +40,19 @@ const exampleInitialState = {
 }
 
 const reducer = (state = exampleInitialState, action) => {
+  const { characters, currentIndex } = state
   switch (action.type) {
     case actionTypes.RECORD:
       return Object.assign({}, state, {
-        currentIndex: state.currentIndex + 1
+        currentIndex: currentIndex + 1,
+        characters: [
+          ...characters.slice(0, currentIndex),
+          {
+            key: characters[currentIndex].key,
+            wasCorrect: action.key === characters[currentIndex].key
+          },
+          ...characters.slice(currentIndex + 1)
+        ]
       })
     default:
       return state
