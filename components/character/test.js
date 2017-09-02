@@ -7,8 +7,7 @@ import { expect as chaiExpect } from 'chai'
 describe('view', () => {
   it('should render current character', () => {
     const props = {
-      idx: 1,
-      currentIndex: 1
+      isCurrent: true,
     }
     const tree = renderer.create(<Character {...props} />).toJSON()
     expect(tree).toHaveStyleRule('text-decoration', 'underline')
@@ -17,18 +16,14 @@ describe('view', () => {
   it('should render correct character', () => {
     const props = {
       wasCorrect: true,
-      idx: 2,
-      currentIndex: 1
     }
     const tree = renderer.create(<Character {...props} />).toJSON()
-    expect(tree).toHaveStyleRule('color', 'blue')
+    expect(tree).toHaveStyleRule('color', 'darkgreen')
   })
 
   it('should render incorrect character', () => {
     const props = {
       wasCorrect: false,
-      idx: 2,
-      currentIndex: 1
     }
     const tree = renderer.create(<Character {...props} />).toJSON()
     expect(tree).toHaveStyleRule('color', 'red')
@@ -45,8 +40,6 @@ describe('view', () => {
   it('should render break for newline character', () => {
     const props = {
       character: ' ',
-      idx: 2,
-      currentIndex: 1
     }
     const wrapper = mount(<Character {...props} />)
     chaiExpect(wrapper).to.have.text(' ');

@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 const CorrectCharacter = styled.span`
-  color: blue;
+  color: darkgreen;
 
 `
 const IncorrectCharacter = styled.span`
@@ -31,8 +31,8 @@ const otherCharacter = (character, wasCorrect) => {
   }
 }
 
-const PlainCharacter = ({ character, wasCorrect, currentIndex, idx }) => {
-  if (currentIndex === idx) {
+const PlainCharacter = ({ isCurrent, character, wasCorrect}) => {
+  if (isCurrent) {
     return <CurrentCharacter>{character}</CurrentCharacter>
   }
   return otherCharacter(character, wasCorrect)
