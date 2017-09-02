@@ -1,11 +1,9 @@
-const initialText = `
-const CharacterButton = ({ character, onClick }) => (
+const initialText =
+`const CharacterButton = ({ character, onClick }) => (
   <button className={styles.button} onClick={onClick}>
     {character}
   </button>
-);
-
-`
+);`
 
 const format = (text) => text.split('')
 
