@@ -5,7 +5,7 @@ const addCharacter = (characters, pressedKey, currentIndex) => (
     ...characters.slice(0, currentIndex),
     {
       character: characters[currentIndex].character,
-      wasCorrect: pressedKey === characters[currentIndex].key
+      wasCorrect: pressedKey === characters[currentIndex].character
     },
     ...characters.slice(currentIndex + 1)
   ]

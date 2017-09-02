@@ -14,7 +14,7 @@ const Index = ({ characters }) => (
   <Container>
     <KeyListener />
     { characters.map( (character, idx) => (
-      <Character {...character} key={idx} />
+      <Character {...character} key={idx} idx={idx}/>
     ))}
   </Container>
 )
