@@ -12,7 +12,7 @@ const CurrentCharacter = styled.span`
   text-decoration: underline;
 `
 
-const alreadyTyped = (character, wasCorrect, currentIndex, idx) => {
+const otherCharacter = (character, wasCorrect) => {
   if (wasCorrect === true) {
     return (
       <CorrectCharacter>{character}</CorrectCharacter>
@@ -32,7 +32,20 @@ const Character = ({ character, wasCorrect, currentIndex, idx }) => {
   if (currentIndex === idx) {
     return <CurrentCharacter>{character}</CurrentCharacter>
   }
-  return alreadyTyped(character, wasCorrect, currentIndex, idx)
+  return otherCharacter(character, wasCorrect)
 }
 
-export default Character
+const FullCharacter = (props) => {
+  if(props.character === '\n') {
+    return (
+      <span>
+        <Character {...props} />
+        <br />
+      </span>
+    )
+  }
+  return (
+    <Character {...props} />
+  )
+}
+export default FullCharacter
