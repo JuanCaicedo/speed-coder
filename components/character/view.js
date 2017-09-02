@@ -1,18 +1,10 @@
-import styled from 'styled-components'
+import {
+  CorrectCharacter,
+  IncorrectCharacter,
+  CurrentCharacter,
+} from './styles'
 
 const SPACE = '\u00A0'
-
-const CorrectCharacter = styled.span`
-  color: darkgreen;
-
-`
-const IncorrectCharacter = styled.span`
-  color: red;
-`
-
-const CurrentCharacter = styled.span`
-  text-decoration: underline;
-`
 
 const renderCharacter = (character) => {
   if (character === ' ') {
