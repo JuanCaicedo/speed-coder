@@ -11,7 +11,7 @@ const actionTypes = {
 
 const exampleInitialState = {
   characters: initialText.map(initCharacter),
-  currentIndex: 2
+  currentIndex: 1
 }
 
 export const initStore = () => {
