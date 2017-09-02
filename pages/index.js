@@ -10,10 +10,12 @@ const Container = styled.div`
   padding: 20px;
 `
 
-const Index = ({ characters, currentIndex }) => (
+const Index = ({ characters }) => (
   <Container>
     <KeyListener />
-    { characters.map(Character(currentIndex)) }
+    { characters.map( (character, idx) => (
+      <Character {...character} idx={idx} />
+    ))}
   </Container>
 )
 

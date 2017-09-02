@@ -19,7 +19,7 @@ const addCharacter = (characters, pressedKey, currentIndex) => (
   [
     ...characters.slice(0, currentIndex),
     {
-      key: characters[currentIndex].key,
+      character: characters[currentIndex].character,
       wasCorrect: pressedKey === characters[currentIndex].key
     },
     ...characters.slice(currentIndex + 1)
