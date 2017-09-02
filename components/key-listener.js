@@ -4,22 +4,10 @@ import { connect } from 'react-redux'
 import keycode from 'keycode'
 import { recordKey } from '../store'
 
-const getKey = ({ which, shiftKey }) => {
-  const key = keycode(which)
-  if (key === 'shift') {
-    return null
-  }
-  if (shiftKey) {
-    return key.toUpperCase()
-  }
-
-  return key
-}
-
 class KeyListener extends React.Component {
   componentDidMount() {
-    window.onkeyup = (e) => {
-      const key = getKey(e)
+    window.onkeypress = (e = window.event) => {
+      const { key } = e
       if (key) {
         this.props.recordKey(key)
       }
