@@ -1,24 +1,38 @@
-const increaseIndex = (index) => (index + 1)
+import {
+  getCurrentIndex,
+  getCharacters,
+  getCurrentCharacter,
+  getCorrectCharacter,
+} from '../selectors';
 
-const addCharacter = (characters, pressedKey, currentIndex) => (
-  [
+const increaseIndex = (state) => getCurrentIndex(state) + 1
+
+const addCharacter = (state, action) => {
+  const characters = getCharacters(state)
+  const currentIndex = getCurrentIndex(state)
+  const pressedKey = action.key
+  const correctCharacter = getCorrectCharacter(state)
+
+  return [
     ...characters.slice(0, currentIndex),
     {
-      character: characters[currentIndex].character,
-      wasCorrect: pressedKey === characters[currentIndex].character
+      character: correctCharacter,
+      wasCorrect: pressedKey === correctCharacter
     },
     ...characters.slice(currentIndex + 1)
   ]
-)
+}
 
 const reducer = (state, action) => {
-  const { characters, currentIndex } = state
+  const characters = getCharacters(state)
+  const currentIndex = getCurrentIndex(state)
+
   switch (action.type) {
     case 'RECORD':
       return {
         ...state,
-        currentIndex: increaseIndex(currentIndex),
-        characters: addCharacter(characters, action.key, currentIndex)
+        currentIndex: increaseIndex(state),
+        characters: addCharacter(state, action)
       }
     default:
       return state
