@@ -10,25 +10,17 @@ const Container = styled.div`
   padding: 20px;
 `
 
-class Index extends React.Component {
+const Index = ({ characters, currentIndex }) => (
+  <Container>
+    <KeyListener />
+    { characters.map(Character(currentIndex)) }
+  </Container>
+)
 
-  render() {
-    const { characters, currentIndex } = this.props
-    return (
-      <Container>
-        <KeyListener />
-        { characters.map(Character(currentIndex)) }
-      </Container>
-    )
-  }
-}
-
-const mapStateToProps = (state) => {
-  return {
-    characters: state.characters,
-    currentIndex: state.currentIndex
-  }
-}
+const mapStateToProps = (state) => ({
+  characters: state.characters,
+  currentIndex: state.currentIndex
+})
 
 
 export default withRedux(initStore, mapStateToProps)(Index)
