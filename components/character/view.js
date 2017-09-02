@@ -1,5 +1,7 @@
 import styled from 'styled-components'
 
+const SPACE = '\u00A0'
+
 const CorrectCharacter = styled.span`
   color: darkgreen;
 
@@ -12,26 +14,29 @@ const CurrentCharacter = styled.span`
   text-decoration: underline;
 `
 
+const renderCharacter = (character) => {
+  if (character === ' ') {
+    return SPACE
+  }
+  return character
+}
+
 const PlainCharacter = ({ isCurrent, character, status}) => {
   if (isCurrent) {
     return (
-      <CurrentCharacter>{character}</CurrentCharacter>
+      <CurrentCharacter>{renderCharacter(character)}</CurrentCharacter>
     )
   } else if (status === 'correct') {
     return (
-      <CorrectCharacter>{character}</CorrectCharacter>
+      <CorrectCharacter>{renderCharacter(character)}</CorrectCharacter>
     )
   } else if (status === 'incorrect') {
     return (
-      <IncorrectCharacter>{character}</IncorrectCharacter>
-    )
-  } else if (character === ' ') {
-    return (
-      <span>&nbsp;</span>
+      <IncorrectCharacter>{renderCharacter(character)}</IncorrectCharacter>
     )
   }
   return (
-    <span>{character}</span>
+    <span>{renderCharacter(character)}</span>
   )
 }
 

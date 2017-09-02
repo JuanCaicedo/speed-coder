@@ -47,10 +47,23 @@ describe('view', () => {
     chaiExpect(wrapper).to.have.descendants('br');
   })
 
-  it('should render break for newline character', () => {
+  it('should render space character', () => {
     const props = {
       character: ' ',
     }
+    const wrapper = mount(<Character {...props} />)
+    chaiExpect(wrapper).to.have.text(' ');
+  })
+
+  it('should render space character correct', () => {
+    const props = {
+      character: ' ',
+      status: 'correct'
+    }
+
+    const tree = renderer.create(<Character {...props} />).toJSON()
+    expect(tree).toHaveStyleRule('color', 'darkgreen')
+
     const wrapper = mount(<Character {...props} />)
     chaiExpect(wrapper).to.have.text(' ');
   })
