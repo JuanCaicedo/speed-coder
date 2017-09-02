@@ -1,7 +1,7 @@
 import renderer from 'react-test-renderer'
 import 'jest-styled-components'
 import Character from './view'
-import { shallow } from 'enzyme'
+import { shallow, mount } from 'enzyme'
 import { expect as chaiExpect } from 'chai'
 
 describe('view', () => {
@@ -40,6 +40,15 @@ describe('view', () => {
     }
     const wrapper = shallow(<Character {...props} />)
     chaiExpect(wrapper).to.have.descendants('br');
+  })
 
+  it('should render break for newline character', () => {
+    const props = {
+      character: ' ',
+      idx: 2,
+      currentIndex: 1
+    }
+    const wrapper = mount(<Character {...props} />)
+    chaiExpect(wrapper).to.have.text(' ');
   })
 })

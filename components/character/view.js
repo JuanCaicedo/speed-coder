@@ -22,30 +22,33 @@ const otherCharacter = (character, wasCorrect) => {
       <IncorrectCharacter>{character}</IncorrectCharacter>
     )
   } else {
+    if (character === ' ') {
+      return <span>&nbsp;</span>
+    }
     return (
       <span>{character}</span>
     )
   }
 }
 
-const Character = ({ character, wasCorrect, currentIndex, idx }) => {
+const PlainCharacter = ({ character, wasCorrect, currentIndex, idx }) => {
   if (currentIndex === idx) {
     return <CurrentCharacter>{character}</CurrentCharacter>
   }
   return otherCharacter(character, wasCorrect)
 }
 
-const FullCharacter = (props) => {
+const Character = (props) => {
   if(props.character === '\n') {
     return (
       <span>
-        <Character {...props} />
+        <PlainCharacter {...props} />
         <br />
       </span>
     )
   }
   return (
-    <Character {...props} />
+    <PlainCharacter {...props} />
   )
 }
-export default FullCharacter
+export default Character
