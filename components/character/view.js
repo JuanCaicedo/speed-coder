@@ -12,8 +12,12 @@ const CurrentCharacter = styled.span`
   text-decoration: underline;
 `
 
-const otherCharacter = (character, status) => {
-  if (status === 'correct') {
+const PlainCharacter = ({ isCurrent, character, status}) => {
+  if (isCurrent) {
+    return (
+      <CurrentCharacter>{character}</CurrentCharacter>
+    )
+  } else if (status === 'correct') {
     return (
       <CorrectCharacter>{character}</CorrectCharacter>
     )
@@ -21,21 +25,14 @@ const otherCharacter = (character, status) => {
     return (
       <IncorrectCharacter>{character}</IncorrectCharacter>
     )
-  } else {
-    if (character === ' ') {
-      return <span>&nbsp;</span>
-    }
+  } else if (character === ' ') {
     return (
-      <span>{character}</span>
+      <span>&nbsp;</span>
     )
   }
-}
-
-const PlainCharacter = ({ isCurrent, character, status}) => {
-  if (isCurrent) {
-    return <CurrentCharacter>{character}</CurrentCharacter>
-  }
-  return otherCharacter(character, status)
+  return (
+    <span>{character}</span>
+  )
 }
 
 const Character = (props) => {
