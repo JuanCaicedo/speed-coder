@@ -22,7 +22,11 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "babel-jest": "^20.0.3",
     "babel-plugin-styled-components": "1.1.7",
+    "chai-enzyme": "^0.8.0",
+    "enzyme": "^2.9.1",
+    "jest": "^20.0.4",
     "redux-devtools-extension": "^2.13.2"
   }
 }
