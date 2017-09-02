@@ -5,6 +5,16 @@ import { shallow, mount } from 'enzyme'
 import { expect as chaiExpect } from 'chai'
 
 describe('view', () => {
+  it('should render regular character', () => {
+    const props = {
+      character: 'a',
+    }
+    const wrapper = shallow(<Character {...props} />)
+    chaiExpect(wrapper).to.have.html(
+      '<span>a</span>'
+    )
+  })
+
   it('should render current character', () => {
     const props = {
       isCurrent: true,
@@ -15,7 +25,7 @@ describe('view', () => {
 
   it('should render correct character', () => {
     const props = {
-      wasCorrect: true,
+      status: 'correct',
     }
     const tree = renderer.create(<Character {...props} />).toJSON()
     expect(tree).toHaveStyleRule('color', 'darkgreen')
@@ -23,7 +33,7 @@ describe('view', () => {
 
   it('should render incorrect character', () => {
     const props = {
-      wasCorrect: false,
+      status: 'incorrect',
     }
     const tree = renderer.create(<Character {...props} />).toJSON()
     expect(tree).toHaveStyleRule('color', 'red')

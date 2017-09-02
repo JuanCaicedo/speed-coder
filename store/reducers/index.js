@@ -17,7 +17,7 @@ const addCharacter = (state, action) => {
     ...characters.slice(0, currentIndex),
     {
       character: correctCharacter,
-      wasCorrect: pressedKey === correctCharacter
+      status: pressedKey === correctCharacter ? 'correct' : 'incorrect',
     },
     ...characters.slice(currentIndex + 1)
   ]
