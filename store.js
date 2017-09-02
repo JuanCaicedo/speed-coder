@@ -1,41 +1,15 @@
 import { createStore, applyMiddleware } from 'redux'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk'
+import initialText from './data/gist'
+import { initCharacter } from './components/character'
 
 const actionTypes = {
   RECORD: 'RECORD'
 }
 
 const exampleInitialState = {
-  characters: [{
-    key: 'c',
-    wasCorrect: true
-  }, {
-    key: 'o',
-    wasCorrect: false
-  },{
-    key: 'n',
-  },{
-    key: 's',
-  },{
-    key: 'o',
-  },{
-    key: 'l',
-  },{
-    key: 'e',
-  },{
-    key: '.',
-  },{
-    key: 'l',
-  },{
-    key: 'o',
-  },{
-    key: 'g',
-  },{
-    key: '(',
-  },{
-    key: ')',
-  }],
+  characters: initialText.map(initCharacter),
   currentIndex: 2
 }
 

@@ -42,4 +42,10 @@ const Character = (currentIndex) => ({ key, wasCorrect }, idx) => {
   )
 }
 
+const initCharacter = (character) => ({
+  key: character
+})
+
 export default Character
+
+export { initCharacter }
