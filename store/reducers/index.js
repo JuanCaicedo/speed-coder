@@ -5,6 +5,13 @@ import {
   getCorrectCharacter,
 } from '../selectors';
 
+const equal = (key1, key2) => {
+  if (key1 === 'Enter' && key2 === '\n') {
+    return true
+  }
+  return key1 === key2
+}
+
 const increaseIndex = (state) => getCurrentIndex(state) + 1
 
 const addCharacter = (state, action) => {
@@ -17,7 +24,7 @@ const addCharacter = (state, action) => {
     ...characters.slice(0, currentIndex),
     {
       character: correctCharacter,
-      status: pressedKey === correctCharacter ? 'correct' : 'incorrect',
+      status: equal(pressedKey, correctCharacter) ? 'correct' : 'incorrect',
     },
     ...characters.slice(currentIndex + 1)
   ]

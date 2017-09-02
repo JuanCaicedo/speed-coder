@@ -1,5 +1,6 @@
 const initialText =
-`const CharacterButton = ({ character, onClick }) => (
+`
+const CharacterButton = ({ character, onClick }) => (
   <button className={styles.button} onClick={onClick}>
     {character}
   </button>
