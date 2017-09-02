@@ -32,11 +32,11 @@ const getStyleClasses = (currentIndex, idx, wasCorrect) => {
   return classes;
 }
 
-const Character = ({ character, wasCorrect, currentIndex, idx }) => {
-  const styleClasses = getStyleClasses(currentIndex, idx, wasCorrect)
+const Character = ({ character, wasCorrect, currentIndex, key }) => {
+  const styleClasses = getStyleClasses(currentIndex, key, wasCorrect)
   return (
     <StyledCharacter
-      key={idx}
+      key={key}
       className={styleClasses.join(' ')}
       >
       {character}
