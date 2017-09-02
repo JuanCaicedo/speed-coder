@@ -5,4 +5,5 @@ export const Container = styled.div`
   background-color: lightgrey;
   padding: 20px;
   font-family: Courier;
+  border-radius: 4px;
 `
