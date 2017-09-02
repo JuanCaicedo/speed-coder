@@ -4,11 +4,16 @@ import {
   CurrentCharacter,
 } from './styles'
 
-const SPACE = '\u00A0'
+const U_SPACE = '\u00A0'
+const SPACE = ' '
+const NEW_LINE = '\n'
+const NEW_LINE_TEXT = '↵'
 
 const renderCharacter = (character) => {
-  if (character === ' ') {
-    return SPACE
+  if (character === SPACE) {
+    return U_SPACE
+  } else if (character === NEW_LINE) {
+    return NEW_LINE_TEXT
   }
   return character
 }

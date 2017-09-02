@@ -47,6 +47,14 @@ describe('view', () => {
     chaiExpect(wrapper).to.have.descendants('br');
   })
 
+  it('should render text for newline character', () => {
+    const props = {
+      character: '\n',
+    }
+    const wrapper = mount(<Character {...props} />)
+    chaiExpect(wrapper).to.have.text('↵');
+  })
+
   it('should render space character', () => {
     const props = {
       character: ' ',
@@ -67,4 +75,5 @@ describe('view', () => {
     const wrapper = mount(<Character {...props} />)
     chaiExpect(wrapper).to.have.text(' ');
   })
+
 })
