@@ -35,8 +35,10 @@ const getStyleClasses = (currentIndex, idx, wasCorrect) => {
 const Character = (currentIndex) => ({ key, wasCorrect }, idx) => {
   const styleClasses = getStyleClasses(currentIndex, idx, wasCorrect)
   return (
-    <StyledCharacter key={idx}
-                     className={styleClasses.join(' ')} >
+      <StyledCharacter
+    key={idx}
+    className={styleClasses.join(' ')}
+      >
       {key}
     </StyledCharacter>
   )

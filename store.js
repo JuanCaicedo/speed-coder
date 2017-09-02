@@ -40,10 +40,10 @@ const reducer = (state = exampleInitialState, action) => {
   }
 }
 
-export const initStore = (initialState = exampleInitialState) => {
+export const initStore = () => {
   return createStore(
     reducer,
-    initialState,
+    exampleInitialState,
     composeWithDevTools(applyMiddleware(thunkMiddleware))
   )
 }
