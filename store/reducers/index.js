@@ -12,9 +12,7 @@ const equal = (key1, key2) => {
   return key1 === key2
 }
 
-const increaseIndex = state => getCurrentIndex(state) + 1
-
-const addCharacter = (state, action) => {
+export const addCharacter = (state, action) => {
   const characters = getCharacters(state)
   const currentIndex = getCurrentIndex(state)
   const pressedKey = action.key
@@ -35,7 +33,7 @@ const reducer = (state, action) => {
     case 'RECORD':
       return {
         ...state,
-        currentIndex: increaseIndex(state),
+        currentIndex: getCurrentIndex(state) + 1,
         characters: addCharacter(state, action),
       }
     default:
