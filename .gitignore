@@ -1,3 +1,4 @@
 node_modules
 local*
 .next
+.dir-locals.el
