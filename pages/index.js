@@ -1,8 +1,8 @@
 import React from 'react'
 import withRedux from 'next-redux-wrapper'
-import { initStore } from '../store'
 import styled, { injectGlobal } from 'styled-components'
-import TypingBox from '../components/typing-box'
+import { initStore } from '../store'
+import TypingTest from '../components/typing-test'
 
 injectGlobal`
   body {
@@ -16,12 +16,10 @@ const Frame = styled.div`
   justify-content: center;
   padding-top: 40px;
 `
-
-const Index = () => (
+export const Index = () => (
   <Frame>
-    <TypingBox />
+    <TypingTest />
   </Frame>
 )
-
 
 export default withRedux(initStore)(Index)

@@ -11,3 +11,12 @@ export const getCorrectCharacter = createSelector(
   getCurrentCharacter,
   (character) => character.character
 )
+export const getCharactersLength = createSelector(
+  getCharacters,
+  (characters) => characters.length
+)
+export const getIsFinished = createSelector(
+  getCurrentIndex,
+  getCharactersLength,
+  (idx, charactersLength) => idx >= charactersLength
+)

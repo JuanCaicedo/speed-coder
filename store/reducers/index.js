@@ -31,15 +31,12 @@ const addCharacter = (state, action) => {
 }
 
 const reducer = (state, action) => {
-  const characters = getCharacters(state)
-  const currentIndex = getCurrentIndex(state)
-
   switch (action.type) {
     case 'RECORD':
       return {
         ...state,
         currentIndex: increaseIndex(state),
-        characters: addCharacter(state, action)
+        characters: addCharacter(state, action),
       }
     default:
       return state
