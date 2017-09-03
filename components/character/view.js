@@ -9,7 +9,7 @@ const SPACE = ' '
 const NEW_LINE = '\n'
 const NEW_LINE_TEXT = '↵'
 
-const renderCharacter = (character) => {
+const renderCharacter = character => {
   if (character === SPACE) {
     return U_SPACE
   } else if (character === NEW_LINE) {
@@ -18,27 +18,19 @@ const renderCharacter = (character) => {
   return character
 }
 
-const PlainCharacter = ({ isCurrent, character, status}) => {
+const PlainCharacter = ({ isCurrent, character, status }) => {
   if (isCurrent) {
-    return (
-      <CurrentCharacter>{renderCharacter(character)}</CurrentCharacter>
-    )
+    return <CurrentCharacter>{renderCharacter(character)}</CurrentCharacter>
   } else if (status === 'correct') {
-    return (
-      <CorrectCharacter>{renderCharacter(character)}</CorrectCharacter>
-    )
+    return <CorrectCharacter>{renderCharacter(character)}</CorrectCharacter>
   } else if (status === 'incorrect') {
-    return (
-      <IncorrectCharacter>{renderCharacter(character)}</IncorrectCharacter>
-    )
+    return <IncorrectCharacter>{renderCharacter(character)}</IncorrectCharacter>
   }
-  return (
-    <span>{renderCharacter(character)}</span>
-  )
+  return <span>{renderCharacter(character)}</span>
 }
 
-const Character = (props) => {
-  if(props.character === '\n') {
+const Character = props => {
+  if (props.character === '\n') {
     return (
       <span>
         <PlainCharacter {...props} />
@@ -46,8 +38,6 @@ const Character = (props) => {
       </span>
     )
   }
-  return (
-    <PlainCharacter {...props} />
-  )
+  return <PlainCharacter {...props} />
 }
 export default Character

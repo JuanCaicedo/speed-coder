@@ -3,11 +3,11 @@ import Character from './view'
 
 const mapStateToProps = (state, ownProps) => ({
   currentIndex: state.currentIndex,
-  isCurrent: state.currentIndex === ownProps.idx
+  isCurrent: state.currentIndex === ownProps.idx,
 })
 
-const initCharacter = (character) => ({
-  character
+const initCharacter = character => ({
+  character,
 })
 
 export default connect(mapStateToProps)(Character)

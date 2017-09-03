@@ -5,8 +5,8 @@ import { Container } from './styles'
 const TypingBox = ({ characters }) => (
   <Container>
     <KeyListener />
-    { characters.map( (character, idx) => (
-      <Character {...character} key={idx} idx={idx}/>
+    {characters.map((character, idx) => (
+      <Character {...character} key={idx} idx={idx} />
     ))}
   </Container>
 )

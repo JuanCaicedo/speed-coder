@@ -18,13 +18,13 @@ class KeyListener extends React.Component {
   }
 }
 
-const mapDispathToProps = (dispatch) => {
+const mapDispathToProps = dispatch => {
   return {
-    recordKey: bindActionCreators(recordKey, dispatch)
+    recordKey: bindActionCreators(recordKey, dispatch),
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return state
 }
 

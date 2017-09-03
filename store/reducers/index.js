@@ -3,7 +3,7 @@ import {
   getCharacters,
   getCurrentCharacter,
   getCorrectCharacter,
-} from '../selectors';
+} from '../selectors'
 
 const equal = (key1, key2) => {
   if (key1 === 'Enter' && key2 === '\n') {
@@ -12,7 +12,7 @@ const equal = (key1, key2) => {
   return key1 === key2
 }
 
-const increaseIndex = (state) => getCurrentIndex(state) + 1
+const increaseIndex = state => getCurrentIndex(state) + 1
 
 const addCharacter = (state, action) => {
   const characters = getCharacters(state)
@@ -26,7 +26,7 @@ const addCharacter = (state, action) => {
       character: correctCharacter,
       status: equal(pressedKey, correctCharacter) ? 'correct' : 'incorrect',
     },
-    ...characters.slice(currentIndex + 1)
+    ...characters.slice(currentIndex + 1),
   ]
 }
 
@@ -40,7 +40,7 @@ const reducer = (state, action) => {
       }
     default:
       return state
-    }
+  }
 }
 
 export default reducer

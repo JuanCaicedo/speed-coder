@@ -10,9 +10,7 @@ describe('view', () => {
       character: 'a',
     }
     const wrapper = shallow(<Character {...props} />)
-    chaiExpect(wrapper).to.have.html(
-      '<span>a</span>'
-    )
+    chaiExpect(wrapper).to.have.html('<span>a</span>')
   })
 
   it('should render current character', () => {
@@ -44,7 +42,7 @@ describe('view', () => {
       character: '\n',
     }
     const wrapper = shallow(<Character {...props} />)
-    chaiExpect(wrapper).to.have.descendants('br');
+    chaiExpect(wrapper).to.have.descendants('br')
   })
 
   it('should render text for newline character', () => {
@@ -52,7 +50,7 @@ describe('view', () => {
       character: '\n',
     }
     const wrapper = mount(<Character {...props} />)
-    chaiExpect(wrapper).to.have.text('↵');
+    chaiExpect(wrapper).to.have.text('↵')
   })
 
   it('should render space character', () => {
@@ -60,20 +58,19 @@ describe('view', () => {
       character: ' ',
     }
     const wrapper = mount(<Character {...props} />)
-    chaiExpect(wrapper).to.have.text(' ');
+    chaiExpect(wrapper).to.have.text(' ')
   })
 
   it('should render space character correct', () => {
     const props = {
       character: ' ',
-      status: 'correct'
+      status: 'correct',
     }
 
     const tree = renderer.create(<Character {...props} />).toJSON()
     expect(tree).toHaveStyleRule('color', 'darkgreen')
 
     const wrapper = mount(<Character {...props} />)
-    chaiExpect(wrapper).to.have.text(' ');
+    chaiExpect(wrapper).to.have.text(' ')
   })
-
 })

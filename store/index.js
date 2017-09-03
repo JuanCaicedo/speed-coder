@@ -6,12 +6,12 @@ import { initCharacter } from '../components/character'
 import reducer from './reducers'
 
 const actionTypes = {
-  RECORD: 'RECORD'
+  RECORD: 'RECORD',
 }
 
 const exampleInitialState = {
   characters: initialText.map(initCharacter),
-  currentIndex: 0
+  currentIndex: 0,
 }
 
 export const initStore = () => {
@@ -22,9 +22,9 @@ export const initStore = () => {
   )
 }
 
-export const recordKey = (key) => (dispatch) => {
+export const recordKey = key => dispatch => {
   return dispatch({
     type: actionTypes.RECORD,
-    key: key
+    key: key,
   })
 }

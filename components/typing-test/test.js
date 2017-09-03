@@ -10,20 +10,16 @@ describe('index page', () => {
       characters: [{}],
     }
     const wrapper = shallow(<TypingTest {...props} />)
-    expect(wrapper).to.contain(
-      <TypingBox />
-    )
+    expect(wrapper).to.contain(<TypingBox />)
   })
 
   it('shows accuracy after finishing', () => {
     const props = {
       characters: [{}],
       isFinished: true,
-      accuracy: '4/100'
+      accuracy: '4/100',
     }
     const wrapper = mount(<TypingTest {...props} />)
-    expect(wrapper.find(Done)).to.have.text(
-      'Accuracy: 4/100'
-    )
+    expect(wrapper.find(Done)).to.have.text('Accuracy: 4/100')
   })
 })
