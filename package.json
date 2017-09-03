@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "dev": "next"
+    "dev": "next",
+    "precommit": "lint-staged"
   },
   "keywords": [],
   "author": "Juan Caicedo <retiredcanadianpoet@gmail.com>",
@@ -29,7 +30,10 @@
     "chai": "^4.1.2",
     "chai-enzyme": "^0.8.0",
     "enzyme": "^2.9.1",
+    "husky": "^0.14.3",
     "jest": "^20.0.4",
+    "lint-staged": "^4.0.4",
+    "prettier": "^1.6.1",
     "react-test-renderer": "^15.6.1",
     "redux-devtools-extension": "^2.13.2"
   },
@@ -44,6 +48,12 @@
     },
     "setupFiles": [
       "<rootDir>/dev/jest-setup.js"
+    ]
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --single-quote --trailing-comma es5 --no-semi --write",
+      "git add"
     ]
   }
 }
