@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { getIsFinished } from '.'
+import { getIsFinished, getAccuracy } from '.'
 
 describe('selectors', () => {
 
@@ -19,6 +19,22 @@ describe('selectors', () => {
         characters: [ {}, {} ]
       }
       expect(getIsFinished(state)).to.be.true
+    })
+  })
+
+  describe('getAccuracy', () => {
+
+    it('should return accuracy', () => {
+      const state = {
+        currentIndex: 2,
+        characters: [
+          { status: 'incorrect'},
+          { status: 'correct'},
+          { status: 'incorrect'},
+        ]
+      }
+      expect(getAccuracy(state)).to.equal('1/3')
+
     })
   })
 })

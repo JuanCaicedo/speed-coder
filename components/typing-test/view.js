@@ -1,10 +1,10 @@
 import TypingBox from '../typing-box'
 import { StyledTypingTest, Done } from './styles'
 
-const TypingTest = ({ isFinished }) => (
+const TypingTest = ({ isFinished, accuracy }) => (
   <StyledTypingTest>
     { isFinished ? (
-      <Done>Done</Done>
+      <Done>Accuracy: {accuracy}</Done>
     ) : (
       <TypingBox />
     )}
