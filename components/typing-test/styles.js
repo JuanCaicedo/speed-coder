@@ -8,3 +8,10 @@ export const StyledTypingTest = styled.div`
   min-width: 534.531px;
   min-height: 113.636px;
 `
+
+export const Done = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`
