@@ -11,7 +11,11 @@ export const StyledTypingTest = styled.div`
 
 export const Done = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100%;
 `
+
+export const Accuracy = styled.div``
+export const Duration = styled.div``

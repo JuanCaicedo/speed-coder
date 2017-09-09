@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { getIsFinished, getAccuracy } from '.'
+import { getIsFinished, getAccuracy, getDuration } from '.'
 
 describe('selectors', () => {
   describe('getIsFinished', () => {
@@ -31,6 +31,16 @@ describe('selectors', () => {
         ],
       }
       expect(getAccuracy(state)).to.equal('1/3')
+    })
+  })
+
+  describe('getDuration', () => {
+    it('should get time taken', () => {
+      const state = {
+        startTime: 10,
+        endTime: 130,
+      }
+      expect(getDuration(state)).to.equal('120.00')
     })
   })
 })

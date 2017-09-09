@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { shallow, mount } from 'enzyme'
 import TypingTest from './view'
 import TypingBox from '../typing-box'
-import { Done } from './styles'
+import { Accuracy, Duration } from './styles'
 
 describe('index page', () => {
   it('shows typing box before finishing', () => {
@@ -20,6 +20,16 @@ describe('index page', () => {
       accuracy: '4/100',
     }
     const wrapper = mount(<TypingTest {...props} />)
-    expect(wrapper.find(Done)).to.have.text('Accuracy: 4/100')
+    expect(wrapper.find(Accuracy)).to.have.text('Accuracy: 4/100')
+  })
+
+  it('shows duration after finishing', () => {
+    const props = {
+      characters: [{}],
+      isFinished: true,
+      duration: '2.5s',
+    }
+    const wrapper = mount(<TypingTest {...props} />)
+    expect(wrapper.find(Duration)).to.have.text('Time taken: 2.5s')
   })
 })

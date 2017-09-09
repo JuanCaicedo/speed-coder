@@ -31,3 +31,10 @@ export const getAccuracy = createSelector(
   (charactersLength, correctCharactersLenght) =>
     `${correctCharactersLenght}/${charactersLength}`
 )
+export const getStartTime = state => state.startTime
+export const getEndTime = state => state.endTime
+export const getDuration = createSelector(
+  getStartTime,
+  getEndTime,
+  (start, end) => (end - start).toFixed(2)
+)

@@ -5,10 +5,6 @@ import initialText from '../data/gist'
 import { initCharacter } from '../components/character'
 import reducer from './reducers'
 
-const actionTypes = {
-  RECORD: 'RECORD',
-}
-
 const exampleInitialState = {
   characters: initialText.map(initCharacter),
   currentIndex: 0,
@@ -24,7 +20,21 @@ export const initStore = () => {
 
 export const recordKey = key => dispatch => {
   return dispatch({
-    type: actionTypes.RECORD,
-    key: key,
+    type: 'RECORD',
+    key,
+  })
+}
+
+export const startTimer = startTime => dispatch => {
+  return dispatch({
+    type: 'START_TIMER',
+    startTime,
+  })
+}
+
+export const endTimer = endTime => dispatch => {
+  return dispatch({
+    type: 'END_TIMER',
+    endTime,
   })
 }

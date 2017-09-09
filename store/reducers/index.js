@@ -36,6 +36,16 @@ const reducer = (state, action) => {
         currentIndex: getCurrentIndex(state) + 1,
         characters: addCharacter(state, action),
       }
+    case 'START_TIMER':
+      return {
+        ...state,
+        startTime: action.startTime,
+      }
+    case 'END_TIMER':
+      return {
+        ...state,
+        endTime: action.endTime,
+      }
     default:
       return state
   }

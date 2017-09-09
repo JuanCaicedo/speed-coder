@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { addCharacter } from '.'
+import reducer, { addCharacter } from '.'
 
 describe('reducers', () => {
   describe('addCharacter', () => {
@@ -23,6 +23,26 @@ describe('reducers', () => {
           character: 'x',
           status: 'correct',
         })
+    })
+  })
+
+  describe('reducer', () => {
+    it('starts timer', () => {
+      const state = {}
+      const action = {
+        type: 'START_TIMER',
+        startTime: 1000,
+      }
+      expect(reducer(state, action)).to.have.property('startTime', 1000)
+    })
+
+    it('ends timer', () => {
+      const state = {}
+      const action = {
+        type: 'END_TIMER',
+        endTime: 1000,
+      }
+      expect(reducer(state, action)).to.have.property('endTime', 1000)
     })
   })
 })
