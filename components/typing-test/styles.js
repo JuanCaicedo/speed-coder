@@ -19,3 +19,4 @@ export const Done = styled.div`
 
 export const Accuracy = styled.div``
 export const Duration = styled.div``
+export const Speed = styled.div``

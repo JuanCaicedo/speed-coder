@@ -38,3 +38,8 @@ export const getDuration = createSelector(
   getEndTime,
   (start, end) => (end - start).toFixed(2)
 )
+export const getSpeed = createSelector(
+  getCharactersLength,
+  getDuration,
+  (charactersLength, duration) => (charactersLength / duration).toFixed(2)
+)
