@@ -17,6 +17,12 @@ export const Done = styled.div`
   height: 100%;
 `
 
-export const Accuracy = styled.div``
-export const Duration = styled.div``
-export const Speed = styled.div``
+const Info = styled.div`
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+`
+
+export const Accuracy = styled(Info)``
+export const Duration = styled(Info)``
+export const Speed = styled(Info)``
