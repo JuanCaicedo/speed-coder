@@ -6,15 +6,15 @@ import {
   getCorrectCharacter,
 } from '../selectors'
 
-const equal = (key1, key2) => {
-  if (key1 === 'Enter' && key2 === '\n') {
-    return true
-  }
-  return key1 === key2
-}
+const isEnter = R.equals('Enter')
+const isNewline = R.equals('\n')
+const isSpace = R.equals(' ')
+
+const keysAreEqual = (key1, key2) =>
+  (isEnter(key1) && isSpace(key2)) || R.equals(key1, key2)
 
 export const removeInitialSpaces = (previous, character) => {
-  if (R.equals(previous, []) && R.equals(character.character, ' ')) {
+  if (R.isEmpty(previous) && isSpace(character.character)) {
     return previous
   }
   return previous.concat(character)
@@ -31,7 +31,7 @@ export const getNextIndex = state => {
   const currentIndex = getCurrentIndex(state)
   const characters = getCharacters(state)
 
-  if (currentCharacter.character === '\n') {
+  if (isNewline(currentCharacter.character)) {
     return nextNonSpaceIndex(characters, currentIndex)
   }
   return getCurrentIndex(state) + 1
@@ -41,36 +41,32 @@ export const addCharacter = (state, action) => {
   const characters = getCharacters(state)
   const currentIndex = getCurrentIndex(state)
   const pressedKey = action.key
-  const correctCharacter = getCorrectCharacter(state)
+  const character = getCorrectCharacter(state)
+  const status = keysAreEqual(pressedKey, character) ? 'correct' : 'incorrect'
 
-  return [
-    ...characters.slice(0, currentIndex),
-    {
-      character: correctCharacter,
-      status: equal(pressedKey, correctCharacter) ? 'correct' : 'incorrect',
-    },
-    ...characters.slice(currentIndex + 1),
-  ]
+  const newChar = {
+    character,
+    status,
+  }
+
+  return R.update(currentIndex, newChar, characters)
 }
 
 const reducer = (state, action) => {
   switch (action.type) {
     case 'RECORD':
-      return {
-        ...state,
+      return R.merge(state, {
         currentIndex: getNextIndex(state),
         characters: addCharacter(state, action),
-      }
+      })
     case 'START_TIMER':
-      return {
-        ...state,
+      return R.merge(state, {
         startTime: action.startTime,
-      }
+      })
     case 'END_TIMER':
-      return {
-        ...state,
+      return R.merge(state, {
         endTime: action.endTime,
-      }
+      })
     default:
       return state
   }
