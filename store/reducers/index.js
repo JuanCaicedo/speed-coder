@@ -1,3 +1,4 @@
+import R from 'ramda'
 import {
   getCurrentIndex,
   getCharacters,
@@ -10,6 +11,30 @@ const equal = (key1, key2) => {
     return true
   }
   return key1 === key2
+}
+
+export const removeInitialSpaces = (previous, character) => {
+  if (R.equals(previous, []) && R.equals(character.character, ' ')) {
+    return previous
+  }
+  return previous.concat(character)
+}
+
+export const nextNonSpaceIndex = (characters, currentIndex) => {
+  const remaining = characters.slice(currentIndex + 1)
+  const noInitalSpaces = remaining.reduce(removeInitialSpaces, [])
+  return characters.indexOf(noInitalSpaces[0])
+}
+
+export const getNextIndex = state => {
+  const currentCharacter = getCurrentCharacter(state)
+  const currentIndex = getCurrentIndex(state)
+  const characters = getCharacters(state)
+
+  if (currentCharacter.character === '\n') {
+    return nextNonSpaceIndex(characters, currentIndex)
+  }
+  return getCurrentIndex(state) + 1
 }
 
 export const addCharacter = (state, action) => {
@@ -33,7 +58,7 @@ const reducer = (state, action) => {
     case 'RECORD':
       return {
         ...state,
-        currentIndex: getCurrentIndex(state) + 1,
+        currentIndex: getNextIndex(state),
         characters: addCharacter(state, action),
       }
     case 'START_TIMER':

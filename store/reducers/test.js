@@ -1,5 +1,10 @@
 import { expect } from 'chai'
-import reducer, { addCharacter } from '.'
+import reducer, {
+  addCharacter,
+  getNextIndex,
+  nextNonSpaceIndex,
+  removeInitialSpaces,
+} from '.'
 
 describe('reducers', () => {
   describe('addCharacter', () => {
@@ -23,6 +28,114 @@ describe('reducers', () => {
           character: 'x',
           status: 'correct',
         })
+    })
+  })
+
+  describe('removeInitialSpaces', () => {
+    it('should add character if not space', () => {
+      const character = {
+        character: 'a',
+      }
+      const actual = removeInitialSpaces([], character)
+      const expected = [
+        {
+          character: 'a',
+        },
+      ]
+      expect(actual).to.eql(expected)
+    })
+
+    it('should not add spaces if no previous character', () => {
+      const character = {
+        character: ' ',
+      }
+      const actual = removeInitialSpaces([], character)
+      const expected = []
+      expect(actual).to.eql(expected)
+    })
+
+    it('should add spaces if previous character', () => {
+      const character = {
+        character: ' ',
+      }
+      const previous = [
+        {
+          character: 'a',
+        },
+      ]
+      const actual = removeInitialSpaces(previous, character)
+      const expected = [
+        {
+          character: 'a',
+        },
+        {
+          character: ' ',
+        },
+      ]
+      expect(actual).to.eql(expected)
+    })
+  })
+
+  describe('nextNonSpaceIndex', () => {
+    it('should jump spaces', () => {
+      const currentIndex = 0
+      const characters = [
+        {
+          character: '\n',
+        },
+        {
+          character: ' ',
+        },
+        {
+          character: ' ',
+        },
+        {
+          character: 'c',
+        },
+      ]
+      const actual = nextNonSpaceIndex(characters, currentIndex)
+      const expected = 3
+      expect(actual).to.eql(expected)
+    })
+  })
+
+  describe('getNextIndex', () => {
+    it('returns next index', () => {
+      const state = {
+        currentIndex: 1,
+        characters: [
+          {},
+          {
+            character: 'a',
+          },
+        ],
+      }
+      const actual = getNextIndex(state)
+      const expected = 2
+      expect(actual).to.eql(expected)
+    })
+
+    it('jumps spaces after new lines', () => {
+      const state = {
+        currentIndex: 0,
+        characters: [
+          {
+            character: '\n',
+          },
+          {
+            character: ' ',
+          },
+          {
+            character: ' ',
+          },
+          {
+            character: 'c',
+          },
+        ],
+      }
+      const actual = getNextIndex(state)
+      const expected = 3
+      expect(actual).to.eql(expected)
     })
   })
 
