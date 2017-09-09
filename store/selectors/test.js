@@ -1,5 +1,13 @@
 import { expect } from 'chai'
-import { getIsFinished, getAccuracy, getDuration, getSpeed } from '.'
+import R from 'ramda'
+import {
+  getIsFinished,
+  getAccuracy,
+  getDuration,
+  getSpeed,
+  getCharactersLength,
+  removeInitialSpaces,
+} from '.'
 
 describe('selectors', () => {
   describe('getIsFinished', () => {
@@ -21,16 +29,26 @@ describe('selectors', () => {
   })
 
   describe('getAccuracy', () => {
-    it('should return accuracy', () => {
+    it('returns accuracy', () => {
+      const state = {
+        currentIndex: 2,
+        characters: [{}, { status: 'correct' }, { status: 'incorrect' }],
+      }
+      expect(getAccuracy(state)).to.equal('1/3')
+    })
+
+    it('does not include initial spaces in correct', () => {
       const state = {
         currentIndex: 2,
         characters: [
-          { status: 'incorrect' },
+          { character: '\n' },
+          {
+            character: ' ',
+          },
           { status: 'correct' },
-          { status: 'incorrect' },
         ],
       }
-      expect(getAccuracy(state)).to.equal('1/3')
+      expect(getAccuracy(state)).to.equal('1/2')
     })
   })
 
@@ -52,6 +70,96 @@ describe('selectors', () => {
         characters: [{}, {}, {}, {}, {}],
       }
       expect(getSpeed(state)).to.equal('1.67')
+    })
+  })
+
+  describe('getCharactersLength', () => {
+    it('should get length', () => {
+      const state = {
+        characters: [{}, {}, {}, {}, {}],
+      }
+      expect(getCharactersLength(state)).to.equal(5)
+    })
+
+    it('should not count spaces between new line and char', () => {
+      const state = {
+        characters: [
+          {
+            character: '\n',
+          },
+          {
+            character: ' ',
+          },
+          {
+            character: ' ',
+          },
+          {
+            character: 'e',
+          },
+        ],
+      }
+      expect(getCharactersLength(state)).to.equal(2)
+    })
+  })
+
+  describe('removeInitialSpaces', () => {
+    it('returns previous if last character is newline and current is space', () => {
+      const previous = [
+        {},
+        {
+          character: '\n',
+        },
+      ]
+      const current = {
+        character: ' ',
+      }
+      const actual = removeInitialSpaces(previous, current)
+      const expected = previous
+      expect(actual).to.eql(expected)
+    })
+
+    describe('reduce', () => {
+      it('should remove spaces between new lines and characters', () => {
+        const characters = [
+          {
+            character: '\n',
+          },
+          {
+            character: ' ',
+          },
+          {
+            character: ' ',
+          },
+          {
+            character: 'a',
+          },
+        ]
+        const actual = R.reduce(removeInitialSpaces, null, characters)
+        expect(actual).to.have.length(2)
+      })
+    })
+  })
+
+  describe('getIsFinished', () => {
+    it('includes initial spaces', () => {
+      const state = {
+        characters: [
+          {
+            character: '\n',
+          },
+          {
+            character: ' ',
+          },
+          {
+            character: ' ',
+          },
+          {
+            character: 'a',
+          },
+        ],
+        currentIndex: 3,
+      }
+      expect(getIsFinished(state)).to.be.false
     })
   })
 })

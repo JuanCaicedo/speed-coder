@@ -1,4 +1,22 @@
 import { createSelector } from 'reselect'
+import R from 'ramda'
+
+const isSpace = R.equals(' ')
+const isNewline = R.equals('\n')
+const getCharacter = R.prop('character')
+const characterIsSpace = R.pipe(getCharacter, isSpace)
+const getLastCharacter = R.pipe(R.last, getCharacter)
+const lastCharacterIsNewLine = R.pipe(getLastCharacter, isNewline)
+
+export const removeInitialSpaces = (previous, character) => {
+  if (!previous && !characterIsSpace(character)) {
+    return [character]
+  }
+  if (lastCharacterIsNewLine(previous) && characterIsSpace(character)) {
+    return previous
+  }
+  return previous.concat(character)
+}
 
 export const getCurrentIndex = state => state.currentIndex
 export const getCharacters = state => state.characters
@@ -12,11 +30,13 @@ export const getCorrectCharacter = createSelector(
   getCurrentCharacter,
   character => character.character
 )
-export const getCharactersLength = createSelector(getCharacters, getLength)
+export const getCharactersLength = createSelector(getCharacters, characters =>
+  getLength(R.reduce(removeInitialSpaces, null, characters))
+)
 export const getIsFinished = createSelector(
   getCurrentIndex,
-  getCharactersLength,
-  (idx, charactersLength) => idx >= charactersLength
+  getCharacters,
+  (idx, characters) => idx >= characters.length
 )
 export const getCorrectCharacters = createSelector(getCharacters, characters =>
   characters.filter(c => c.status === 'correct')
