@@ -94,6 +94,24 @@ describe('reducers', () => {
   })
 
   describe('nextNonSpaceIndex', () => {
+    it('gets next index', () => {
+      const currentIndex = 0
+      const characters = [
+        {
+          character: 'a',
+        },
+        {
+          character: 'b',
+        },
+        {
+          character: 'c',
+        },
+      ]
+      const actual = nextNonSpaceIndex(characters, currentIndex)
+      const expected = 1
+      expect(actual).to.eql(expected)
+    })
+
     it('should jump spaces', () => {
       const currentIndex = 0
       const characters = [

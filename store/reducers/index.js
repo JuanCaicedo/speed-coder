@@ -36,8 +36,9 @@ const removeInitialSpacesRight = (previous, character) => {
 
 export const nextNonSpaceIndex = (characters, currentIndex) => {
   const remaining = characters.slice(currentIndex + 1)
-  const noInitalSpaces = remaining.reduce(removeInitialSpaces, [])
-  return characters.indexOf(noInitalSpaces[0])
+  const noInitalSpaces = R.reduce(removeInitialSpaces, [], remaining)
+  const firstCharacter = R.head(noInitalSpaces)
+  return R.indexOf(firstCharacter, characters)
 }
 
 export const previousNonSpaceIndex = (characters, currentIndex) => {
