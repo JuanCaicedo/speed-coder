@@ -28,3 +28,12 @@ export const updateSnippet = snippet => ({
   type: 'UPDATE_SNIPPET',
   snippet,
 })
+
+export const backspaceCharacter = currentIndex => (dispatch, getState) => {
+  const state = getState()
+  return dispatch({
+    type: 'BACKSPACE',
+    currentIndex: getCurrentIndex(state),
+    characters: getCharacters(state),
+  })
+}

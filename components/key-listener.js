@@ -2,7 +2,12 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getIsFinished } from '../store/selectors'
-import { recordKey, startTimer, endTimer } from '../store/actions'
+import {
+  recordKey,
+  startTimer,
+  endTimer,
+  backspaceCharacter,
+} from '../store/actions'
 
 class KeyListener extends React.Component {
   constructor(props) {
@@ -12,7 +17,9 @@ class KeyListener extends React.Component {
 
   handleKeyPress(e = window.event) {
     const { key, currentIndex } = e
-    if (key) {
+    if (key === 'Backspace') {
+      this.props.backspaceCharacter()
+    } else if (key) {
       this.props.recordKey(key, currentIndex)
     }
   }
@@ -36,6 +43,7 @@ const mapDispatchToProps = dispatch => ({
   recordKey: bindActionCreators(recordKey, dispatch),
   startTimer: bindActionCreators(startTimer, dispatch),
   endTimer: bindActionCreators(endTimer, dispatch),
+  backspaceCharacter: bindActionCreators(backspaceCharacter, dispatch),
 })
 
 export default connect(null, mapDispatchToProps)(KeyListener)
