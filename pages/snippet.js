@@ -3,7 +3,7 @@ import withRedux from 'next-redux-wrapper'
 import styled, { injectGlobal } from 'styled-components'
 import Link from 'next/link'
 import { initStore } from '../store'
-import TypingTest from '../components/typing-test'
+import SnippetChooser from '../components/snippet-chooser'
 
 injectGlobal`
   body {
@@ -19,10 +19,11 @@ const Frame = styled.div`
 `
 export const Index = () => (
   <Frame>
-    <TypingTest />
-    <Link href="/snippet">
-      <button>ChangeSnippet</button>
-    </Link>
+    <SnippetChooser>
+      <Link href="/">
+        <button>Practice</button>
+      </Link>
+    </SnippetChooser>
   </Frame>
 )
 

@@ -21,7 +21,7 @@ export default class SnippetChooser extends Component {
     return (
       <div>
         <textarea placeholder={placeholderText} value={this.state.snippet} />
-        <button onClick={this.handleClick} />
+        <div onClick={this.handleClick}>{this.props.children}</div>
       </div>
     )
   }
