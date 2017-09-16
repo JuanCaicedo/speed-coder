@@ -157,5 +157,24 @@ describe('reducers', () => {
       }
       expect(reducer(state, action)).to.have.property('endTime', 1000)
     })
+
+    it('adds character', () => {
+      const state = {
+        characters: [
+          {
+            character: 'a',
+          },
+        ],
+        currentIndex: 0,
+      }
+      const action = {
+        type: 'RECORD',
+        key: 'a',
+      }
+      expect(reducer(state, action))
+        .to.have.property('characters')
+        .and.to.have.property(0)
+        .and.to.have.property('status', 'correct')
+    })
   })
 })
