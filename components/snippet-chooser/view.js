@@ -1,5 +1,8 @@
 import { Component } from 'react'
-import { UpdateSnippetButton } from './styles'
+import Frame from '../frame'
+import CodeArea from '../code-area'
+import MainButton from '../main-button'
+
 const placeholderText = `console.log('hello world')`
 
 export default class SnippetChooser extends Component {
@@ -26,17 +29,17 @@ export default class SnippetChooser extends Component {
   render() {
     const { onButtonClick } = this.props
     return (
-      <div>
-        <textarea
+      <Frame>
+        <CodeArea
           placeholder={placeholderText}
           value={this.state.snippet}
           onChange={this.handleChange}
           ref="snippet"
         />
-        <UpdateSnippetButton onClick={this.handleClick}>
+        <MainButton onClick={this.handleClick}>
           {this.props.children}
-        </UpdateSnippetButton>
-      </div>
+        </MainButton>
+      </Frame>
     )
   }
 }

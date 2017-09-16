@@ -1,30 +1,19 @@
 import React from 'react'
 import withRedux from 'next-redux-wrapper'
-import styled, { injectGlobal } from 'styled-components'
 import Link from 'next/link'
 import { initStore } from '../store'
 import SnippetChooser from '../components/snippet-chooser'
+import MainButton from '../components/main-button'
+import initGlobalStyles from '../components/global'
 
-injectGlobal`
-  body {
-    margin: 0;
-    background-color: black;
-  }
-`
+initGlobalStyles()
 
-const Frame = styled.div`
-  display: flex;
-  justify-content: center;
-  padding-top: 40px;
-`
 export const Index = () => (
-  <Frame>
-    <SnippetChooser>
-      <Link href="/" prefetch>
-        <button>Practice</button>
-      </Link>
-    </SnippetChooser>
-  </Frame>
+  <SnippetChooser>
+    <Link href="/" prefetch>
+      <a>Practice this snippet</a>
+    </Link>
+  </SnippetChooser>
 )
 
 export default withRedux(initStore)(Index)
