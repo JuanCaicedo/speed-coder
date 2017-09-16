@@ -66,12 +66,14 @@ export const characters = (state = initialCharacters, action) => {
   }
 }
 
-const currentIndex = (state = 0, action) => {
+export const currentIndex = (state = 0, action) => {
   switch (action.type) {
     case 'RECORD':
       const characters = action.characters
       const currentIndex = action.currentIndex
       return getNextIndex(characters, currentIndex)
+    case 'UPDATE_SNIPPET':
+      return 0
     default:
       return state
   }
