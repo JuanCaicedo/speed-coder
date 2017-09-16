@@ -227,6 +227,32 @@ describe('reducers', () => {
         },
       ])
     })
+
+    it('removes status on backspace', () => {
+      const action = {
+        type: 'BACKSPACE',
+        currentIndex: 1,
+      }
+      const actual = characters(
+        [
+          {
+            character: 'a',
+          },
+          {
+            character: 'b',
+            status: 'incorrect',
+          },
+        ],
+        action
+      )
+      expect(actual).to.eql([
+        {
+          character: 'a',
+        },
+        {
+          character: 'b',
+        },
+      ])
+    })
   })
 })
-// it.only('skips initial spaces backspace', () => {

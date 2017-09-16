@@ -78,6 +78,11 @@ export const characters = (state = initialCharacters, action) => {
       const { snippet } = action
       return setUpCharacters(snippet)
     }
+    case 'BACKSPACE': {
+      const { currentIndex } = action
+      const newChar = R.omit(['status'], R.path([currentIndex], state))
+      return R.update(currentIndex, newChar, state)
+    }
     default:
       return state
   }
