@@ -5,19 +5,25 @@ import { getIsFinished } from '../store/selectors'
 import { recordKey, startTimer, endTimer } from '../store/actions'
 
 class KeyListener extends React.Component {
-  handleKeyPress({ key, currentIndex }) {
+  constructor(props) {
+    super(props)
+    this.handleKeyPress = this.handleKeyPress.bind(this)
+  }
+
+  handleKeyPress(e = window.event) {
+    const { key, currentIndex } = e
     if (key) {
       this.props.recordKey(key, currentIndex)
     }
   }
 
   componentDidMount() {
-    window.onkeypress = (e = window.event) => this.handleKeyPress(e)
+    document.addEventListener('keydown', this.handleKeyPress)
     this.props.startTimer(new Date().getTime() / 1000)
   }
 
   componentWillUnmount() {
-    window.onkeypress = null
+    document.removeEventListener('keydown', this.handleKeyPress)
     this.props.endTimer(new Date().getTime() / 1000)
   }
 

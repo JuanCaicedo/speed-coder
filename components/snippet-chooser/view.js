@@ -8,6 +8,7 @@ export default class SnippetChooser extends Component {
       snippet: '',
     }
     this.handleClick = this.handleClick.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
   handleClick() {
@@ -16,11 +17,21 @@ export default class SnippetChooser extends Component {
     onButtonClick(snippet || placeholderText)
   }
 
+  handleChange(event) {
+    this.setState({
+      snippet: event.target.value,
+    })
+  }
   render() {
     const { onButtonClick } = this.props
     return (
       <div>
-        <textarea placeholder={placeholderText} value={this.state.snippet} />
+        <textarea
+          placeholder={placeholderText}
+          value={this.state.snippet}
+          onChange={this.handleChange}
+          ref="snippet"
+        />
         <div onClick={this.handleClick}>{this.props.children}</div>
       </div>
     )
