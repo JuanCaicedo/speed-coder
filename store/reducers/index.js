@@ -16,6 +16,8 @@ const isSpace = R.equals(' ')
 const keysAreEqual = (key1, key2) =>
   (isEnter(key1) && isNewline(key2)) || R.equals(key1, key2)
 
+const setUpCharacters = R.map(initCharacter)
+
 export const removeInitialSpaces = (previous, character) => {
   if (R.isEmpty(previous) && isSpace(character.character)) {
     return previous
@@ -48,12 +50,16 @@ export const addCharacter = (characters, key, currentIndex) => {
   return R.update(currentIndex, newChar, characters)
 }
 
-const initialCharacters = initialText.map(initCharacter)
-const characters = (state = initialCharacters, action) => {
+const initialCharacters = setUpCharacters(initialText)
+export const characters = (state = initialCharacters, action) => {
   switch (action.type) {
     case 'RECORD': {
       const characters = action.characters
       return addCharacter(action.characters, action.key, action.currentIndex)
+    }
+    case 'UPDATE_SNIPPET': {
+      const { snippet } = action
+      return setUpCharacters(snippet)
     }
     default:
       return state
@@ -79,6 +85,7 @@ const startTime = (state = 0, action) => {
       return state
   }
 }
+
 const endTime = (state = 0, action) => {
   switch (action.type) {
     case 'END_TIMER':
@@ -87,6 +94,7 @@ const endTime = (state = 0, action) => {
       return state
   }
 }
+
 const reducer = combineReducers({
   characters,
   currentIndex,

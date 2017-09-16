@@ -4,6 +4,7 @@ import reducer, {
   getNextIndex,
   nextNonSpaceIndex,
   removeInitialSpaces,
+  characters,
 } from '.'
 
 describe('reducers', () => {
@@ -146,6 +147,21 @@ describe('reducers', () => {
       const actual = getNextIndex(characters, currentIndex)
       const expected = 3
       expect(actual).to.eql(expected)
+    })
+  })
+
+  describe('characters', () => {
+    it('updates snippet with new characters', () => {
+      const action = {
+        type: 'UPDATE_SNIPPET',
+        snippet: 't',
+      }
+      const actual = characters({}, action)
+      expect(actual).to.eql([
+        {
+          character: 't',
+        },
+      ])
     })
   })
 

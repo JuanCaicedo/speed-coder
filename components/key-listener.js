@@ -26,10 +26,10 @@ class KeyListener extends React.Component {
   }
 }
 
-const mapDispathToProps = dispatch => ({
+const mapDispatchToProps = dispatch => ({
   recordKey: bindActionCreators(recordKey, dispatch),
   startTimer: bindActionCreators(startTimer, dispatch),
   endTimer: bindActionCreators(endTimer, dispatch),
 })
 
-export default connect(null, mapDispathToProps)(KeyListener)
+export default connect(null, mapDispatchToProps)(KeyListener)

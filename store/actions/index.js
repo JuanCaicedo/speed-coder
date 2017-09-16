@@ -23,3 +23,8 @@ export const endTimer = endTime => dispatch => {
     endTime,
   })
 }
+
+export const updateSnippet = snippet => ({
+  type: 'UPDATE_SNIPPET',
+  snippet,
+})

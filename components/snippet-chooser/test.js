@@ -1,12 +1,10 @@
 import renderer from 'react-test-renderer'
-import 'jest-styled-components'
 import { shallow, mount } from 'enzyme'
 import { expect as chaiExpect } from 'chai'
 import SnippetChooser from './view'
+import { mapDispatchToProps } from '.'
 
-const placeholderText = `
-  console.log('hello world')
-`
+const placeholderText = `console.log('hello world')`
 
 describe('SnippetChooser', () => {
   it('shows text area', () => {
@@ -26,13 +24,41 @@ describe('SnippetChooser', () => {
     chaiExpect(wrapper.find('button')).to.be.present()
   })
 
-  it('calls onButtonClick', () => {
+  it('calls onButtonClick with textarea snippet', () => {
+    const onButtonClick = jest.fn()
+    const props = {
+      onButtonClick,
+    }
+    const wrapper = shallow(<SnippetChooser {...props} />)
+    wrapper.setState({
+      snippet: 'test snippet',
+    })
+    wrapper.find('button').simulate('click')
+    chaiExpect(onButtonClick.mock.calls[0][0]).to.eql('test snippet')
+  })
+
+  it('calls onButtonClick with placeholder text if no snippet', () => {
     const onButtonClick = jest.fn()
     const props = {
       onButtonClick,
     }
     const wrapper = shallow(<SnippetChooser {...props} />)
     wrapper.find('button').simulate('click')
-    chaiExpect(onButtonClick.mock.calls).to.have.length(1)
+    chaiExpect(onButtonClick.mock.calls[0][0]).to.eql(placeholderText)
+  })
+})
+
+describe('mapDispatchToProps', () => {
+  describe('onButtonClick', () => {
+    it('calls dispatch', () => {
+      const dispatch = jest.fn()
+      const { onButtonClick } = mapDispatchToProps(dispatch)
+
+      onButtonClick('test snippet')
+      chaiExpect(dispatch.mock.calls[0][0]).to.eql({
+        type: 'UPDATE_SNIPPET',
+        snippet: 'test snippet',
+      })
+    })
   })
 })
