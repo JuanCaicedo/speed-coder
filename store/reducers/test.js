@@ -3,6 +3,7 @@ import reducer, {
   addCharacter,
   getNextIndex,
   nextNonSpaceIndex,
+  previousNonSpaceIndex,
   removeInitialSpaces,
   characters,
   currentIndex,
@@ -93,6 +94,24 @@ describe('reducers', () => {
   })
 
   describe('nextNonSpaceIndex', () => {
+    it('gets next index', () => {
+      const currentIndex = 0
+      const characters = [
+        {
+          character: 'a',
+        },
+        {
+          character: 'b',
+        },
+        {
+          character: 'c',
+        },
+      ]
+      const actual = nextNonSpaceIndex(characters, currentIndex)
+      const expected = 1
+      expect(actual).to.eql(expected)
+    })
+
     it('should jump spaces', () => {
       const currentIndex = 0
       const characters = [
@@ -111,6 +130,50 @@ describe('reducers', () => {
       ]
       const actual = nextNonSpaceIndex(characters, currentIndex)
       const expected = 3
+      expect(actual).to.eql(expected)
+    })
+  })
+
+  describe('previousNonSpaceIndex', () => {
+    it('jumps spaces after new line', () => {
+      const currentIndex = 3
+      const characters = [
+        {
+          character: '\n',
+        },
+        {
+          character: ' ',
+        },
+        {
+          character: ' ',
+        },
+        {
+          character: 'c',
+        },
+      ]
+      const actual = previousNonSpaceIndex(characters, currentIndex)
+      const expected = 0
+      expect(actual).to.eql(expected)
+    })
+
+    it('keeps spaces between other characters', () => {
+      const currentIndex = 3
+      const characters = [
+        {
+          character: 'a',
+        },
+        {
+          character: ' ',
+        },
+        {
+          character: ' ',
+        },
+        {
+          character: 'c',
+        },
+      ]
+      const actual = previousNonSpaceIndex(characters, currentIndex)
+      const expected = 2
       expect(actual).to.eql(expected)
     })
   })
@@ -164,54 +227,32 @@ describe('reducers', () => {
         },
       ])
     })
-  })
 
-  describe('currentIndex', () => {
-    it('resets when updating snippet', () => {
+    it('removes status on backspace', () => {
       const action = {
-        type: 'UPDATE_SNIPPET',
-        snippet: 't',
+        type: 'BACKSPACE',
+        currentIndex: 1,
       }
-      const actual = currentIndex(8, action)
-      expect(actual).to.eql(0)
-    })
-  })
-
-  describe('reducer', () => {
-    it('starts timer', () => {
-      const state = {}
-      const action = {
-        type: 'START_TIMER',
-        startTime: 1000,
-      }
-      expect(reducer(state, action)).to.have.property('startTime', 1000)
-    })
-
-    it('ends timer', () => {
-      const state = {}
-      const action = {
-        type: 'END_TIMER',
-        endTime: 1000,
-      }
-      expect(reducer(state, action)).to.have.property('endTime', 1000)
-    })
-
-    it('adds character', () => {
-      const state = {}
-      const action = {
-        type: 'RECORD',
-        key: 'a',
-        currentIndex: 0,
-        characters: [
+      const actual = characters(
+        [
           {
             character: 'a',
           },
+          {
+            character: 'b',
+            status: 'incorrect',
+          },
         ],
-      }
-      expect(reducer(state, action))
-        .to.have.property('characters')
-        .and.to.have.property(0)
-        .and.to.have.property('status', 'correct')
+        action
+      )
+      expect(actual).to.eql([
+        {
+          character: 'a',
+        },
+        {
+          character: 'b',
+        },
+      ])
     })
   })
 })

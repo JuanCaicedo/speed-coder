@@ -12,11 +12,13 @@ import {
 const isEnter = R.equals('Enter')
 const isNewline = R.equals('\n')
 const isSpace = R.equals(' ')
+const getCharacter = R.path(['character'])
 
 const keysAreEqual = (key1, key2) =>
   (isEnter(key1) && isNewline(key2)) || R.equals(key1, key2)
 
 const setUpCharacters = R.map(initCharacter)
+const lastIsNewline = R.pipe(R.last, getCharacter, isNewline)
 
 export const removeInitialSpaces = (previous, character) => {
   if (R.isEmpty(previous) && isSpace(character.character)) {
@@ -25,10 +27,25 @@ export const removeInitialSpaces = (previous, character) => {
   return previous.concat(character)
 }
 
+const removeInitialSpacesRight = (previous, character) => {
+  if (lastIsNewline(previous) && isSpace(character.character)) {
+    return previous
+  }
+  return previous.concat(character)
+}
+
 export const nextNonSpaceIndex = (characters, currentIndex) => {
   const remaining = characters.slice(currentIndex + 1)
-  const noInitalSpaces = remaining.reduce(removeInitialSpaces, [])
-  return characters.indexOf(noInitalSpaces[0])
+  const noInitalSpaces = R.reduce(removeInitialSpaces, [], remaining)
+  const firstCharacter = R.head(noInitalSpaces)
+  return R.indexOf(firstCharacter, characters)
+}
+
+export const previousNonSpaceIndex = (characters, currentIndex) => {
+  const remaining = characters.slice(0, currentIndex)
+  const noInitalSpaces = R.reduce(removeInitialSpacesRight, [], remaining)
+  const lastCharacter = R.last(noInitalSpaces)
+  return R.lastIndexOf(lastCharacter, characters)
 }
 
 export const getNextIndex = (characters, currentIndex) => {
@@ -61,6 +78,11 @@ export const characters = (state = initialCharacters, action) => {
       const { snippet } = action
       return setUpCharacters(snippet)
     }
+    case 'BACKSPACE': {
+      const { currentIndex } = action
+      const newChar = R.omit(['status'], R.path([currentIndex], state))
+      return R.update(currentIndex, newChar, state)
+    }
     default:
       return state
   }
@@ -68,12 +90,17 @@ export const characters = (state = initialCharacters, action) => {
 
 export const currentIndex = (state = 0, action) => {
   switch (action.type) {
-    case 'RECORD':
+    case 'RECORD': {
       const characters = action.characters
       const currentIndex = action.currentIndex
       return getNextIndex(characters, currentIndex)
+    }
     case 'UPDATE_SNIPPET':
       return 0
+    case 'BACKSPACE': {
+      const characters = action.characters
+      return previousNonSpaceIndex(characters, state)
+    }
     default:
       return state
   }
