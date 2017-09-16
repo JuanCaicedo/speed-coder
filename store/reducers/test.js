@@ -3,6 +3,7 @@ import reducer, {
   addCharacter,
   getNextIndex,
   nextNonSpaceIndex,
+  previousNonSpaceIndex,
   removeInitialSpaces,
   characters,
   currentIndex,
@@ -115,6 +116,50 @@ describe('reducers', () => {
     })
   })
 
+  describe('previousNonSpaceIndex', () => {
+    it('jumps spaces after new line', () => {
+      const currentIndex = 3
+      const characters = [
+        {
+          character: '\n',
+        },
+        {
+          character: ' ',
+        },
+        {
+          character: ' ',
+        },
+        {
+          character: 'c',
+        },
+      ]
+      const actual = previousNonSpaceIndex(characters, currentIndex)
+      const expected = 0
+      expect(actual).to.eql(expected)
+    })
+
+    it('keeps spaces between other characters', () => {
+      const currentIndex = 3
+      const characters = [
+        {
+          character: 'a',
+        },
+        {
+          character: ' ',
+        },
+        {
+          character: ' ',
+        },
+        {
+          character: 'c',
+        },
+      ]
+      const actual = previousNonSpaceIndex(characters, currentIndex)
+      const expected = 2
+      expect(actual).to.eql(expected)
+    })
+  })
+
   describe('getNextIndex', () => {
     it('returns next index', () => {
       const currentIndex = 1
@@ -165,53 +210,5 @@ describe('reducers', () => {
       ])
     })
   })
-
-  describe('currentIndex', () => {
-    it('resets when updating snippet', () => {
-      const action = {
-        type: 'UPDATE_SNIPPET',
-        snippet: 't',
-      }
-      const actual = currentIndex(8, action)
-      expect(actual).to.eql(0)
-    })
-  })
-
-  describe('reducer', () => {
-    it('starts timer', () => {
-      const state = {}
-      const action = {
-        type: 'START_TIMER',
-        startTime: 1000,
-      }
-      expect(reducer(state, action)).to.have.property('startTime', 1000)
-    })
-
-    it('ends timer', () => {
-      const state = {}
-      const action = {
-        type: 'END_TIMER',
-        endTime: 1000,
-      }
-      expect(reducer(state, action)).to.have.property('endTime', 1000)
-    })
-
-    it('adds character', () => {
-      const state = {}
-      const action = {
-        type: 'RECORD',
-        key: 'a',
-        currentIndex: 0,
-        characters: [
-          {
-            character: 'a',
-          },
-        ],
-      }
-      expect(reducer(state, action))
-        .to.have.property('characters')
-        .and.to.have.property(0)
-        .and.to.have.property('status', 'correct')
-    })
-  })
 })
+// it.only('skips initial spaces backspace', () => {
