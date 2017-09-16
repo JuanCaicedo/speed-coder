@@ -20,7 +20,7 @@ const Frame = styled.div`
 export const Index = () => (
   <Frame>
     <TypingTest />
-    <Link href="/snippet">
+    <Link href="/snippet" prefetch>
       <button>ChangeSnippet</button>
     </Link>
   </Frame>
