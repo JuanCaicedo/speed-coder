@@ -1,4 +1,7 @@
 import R from 'ramda'
+import { combineReducers } from 'redux'
+import initialText from '../../data/gist'
+import { initCharacter } from '../../components/character'
 import {
   getCurrentIndex,
   getCharacters,
@@ -11,7 +14,7 @@ const isNewline = R.equals('\n')
 const isSpace = R.equals(' ')
 
 const keysAreEqual = (key1, key2) =>
-  (isEnter(key1) && isSpace(key2)) || R.equals(key1, key2)
+  (isEnter(key1) && isNewline(key2)) || R.equals(key1, key2)
 
 export const removeInitialSpaces = (previous, character) => {
   if (R.isEmpty(previous) && isSpace(character.character)) {
@@ -34,11 +37,9 @@ export const getNextIndex = (characters, currentIndex) => {
   return currentIndex + 1
 }
 
-export const addCharacter = (characters, action) => {
-  const { currentIndex } = action
-  const pressedKey = action.key
+export const addCharacter = (characters, key, currentIndex) => {
   const character = characters[currentIndex].character
-  const status = keysAreEqual(pressedKey, character) ? 'correct' : 'incorrect'
+  const status = keysAreEqual(key, character) ? 'correct' : 'incorrect'
 
   const newChar = {
     character,
@@ -47,28 +48,50 @@ export const addCharacter = (characters, action) => {
   return R.update(currentIndex, newChar, characters)
 }
 
-const reducer = (state, action) => {
+const initialCharacters = initialText.map(initCharacter)
+const characters = (state = initialCharacters, action) => {
   switch (action.type) {
     case 'RECORD': {
-      const characters = getCharacters(state)
-      const currentIndex = action.currentIndex
-
-      return R.merge(state, {
-        currentIndex: getNextIndex(characters, currentIndex),
-        characters: addCharacter(characters, action),
-      })
+      const characters = action.characters
+      return addCharacter(action.characters, action.key, action.currentIndex)
     }
-    case 'START_TIMER':
-      return R.merge(state, {
-        startTime: action.startTime,
-      })
-    case 'END_TIMER':
-      return R.merge(state, {
-        endTime: action.endTime,
-      })
     default:
       return state
   }
 }
+
+const currentIndex = (state = 0, action) => {
+  switch (action.type) {
+    case 'RECORD':
+      const characters = action.characters
+      const currentIndex = action.currentIndex
+      return getNextIndex(characters, currentIndex)
+    default:
+      return state
+  }
+}
+
+const startTime = (state = 0, action) => {
+  switch (action.type) {
+    case 'START_TIMER':
+      return action.startTime
+    default:
+      return state
+  }
+}
+const endTime = (state = 0, action) => {
+  switch (action.type) {
+    case 'END_TIMER':
+      return action.endTime
+    default:
+      return state
+  }
+}
+const reducer = combineReducers({
+  characters,
+  currentIndex,
+  startTime,
+  endTime,
+})
 
 export default reducer

@@ -1,10 +1,12 @@
-import { getCurrentIndex } from '../selectors'
+import { getCurrentIndex, getCharacters } from '../selectors'
 
 export const recordKey = (key, currentIndex) => (dispatch, getState) => {
+  const state = getState()
   return dispatch({
     type: 'RECORD',
     key,
-    currentIndex: getCurrentIndex(getState()),
+    currentIndex: getCurrentIndex(state),
+    characters: getCharacters(state),
   })
 }
 

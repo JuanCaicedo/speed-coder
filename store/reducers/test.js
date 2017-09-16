@@ -16,11 +16,27 @@ describe('reducers', () => {
         },
         {},
       ]
-      const action = {
-        key: 'x',
-        currentIndex: 1,
-      }
-      expect(addCharacter(characters, action))
+      const key = 'x'
+      const currentIndex = 1
+      expect(addCharacter(characters, key, currentIndex))
+        .to.have.property(1)
+        .and.to.eql({
+          character: 'x',
+          status: 'correct',
+        })
+    })
+
+    it('updates enter', () => {
+      const characters = [
+        {},
+        {
+          character: 'x',
+        },
+        {},
+      ]
+      const key = 'x'
+      const currentIndex = 1
+      expect(addCharacter(characters, key, currentIndex))
         .to.have.property(1)
         .and.to.eql({
           character: 'x',
@@ -153,17 +169,16 @@ describe('reducers', () => {
     })
 
     it('adds character', () => {
-      const state = {
+      const state = {}
+      const action = {
+        type: 'RECORD',
+        key: 'a',
+        currentIndex: 0,
         characters: [
           {
             character: 'a',
           },
         ],
-      }
-      const action = {
-        type: 'RECORD',
-        key: 'a',
-        currentIndex: 0,
       }
       expect(reducer(state, action))
         .to.have.property('characters')
