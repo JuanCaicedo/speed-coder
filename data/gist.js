@@ -5,6 +5,4 @@ const CharacterButton = ({ character, onClick }) => (
   </button>
 );`
 
-const format = text => text.split('')
-
-export default format(initialText)
+export default initialText

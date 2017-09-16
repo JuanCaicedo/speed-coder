@@ -1,4 +1,7 @@
 import R from 'ramda'
+import { combineReducers } from 'redux'
+import initialText from '../../data/gist'
+import { initCharacter } from '../../components/character'
 import {
   getCurrentIndex,
   getCharacters,
@@ -11,7 +14,9 @@ const isNewline = R.equals('\n')
 const isSpace = R.equals(' ')
 
 const keysAreEqual = (key1, key2) =>
-  (isEnter(key1) && isSpace(key2)) || R.equals(key1, key2)
+  (isEnter(key1) && isNewline(key2)) || R.equals(key1, key2)
+
+const setUpCharacters = R.map(initCharacter)
 
 export const removeInitialSpaces = (previous, character) => {
   if (R.isEmpty(previous) && isSpace(character.character)) {
@@ -26,50 +31,77 @@ export const nextNonSpaceIndex = (characters, currentIndex) => {
   return characters.indexOf(noInitalSpaces[0])
 }
 
-export const getNextIndex = state => {
-  const currentCharacter = getCurrentCharacter(state)
-  const currentIndex = getCurrentIndex(state)
-  const characters = getCharacters(state)
-
+export const getNextIndex = (characters, currentIndex) => {
+  const currentCharacter = characters[currentIndex]
   if (isNewline(currentCharacter.character)) {
     return nextNonSpaceIndex(characters, currentIndex)
   }
-  return getCurrentIndex(state) + 1
+  return currentIndex + 1
 }
 
-export const addCharacter = (state, action) => {
-  const characters = getCharacters(state)
-  const currentIndex = getCurrentIndex(state)
-  const pressedKey = action.key
-  const character = getCorrectCharacter(state)
-  const status = keysAreEqual(pressedKey, character) ? 'correct' : 'incorrect'
+export const addCharacter = (characters, key, currentIndex) => {
+  const character = characters[currentIndex].character
+  const status = keysAreEqual(key, character) ? 'correct' : 'incorrect'
 
   const newChar = {
     character,
     status,
   }
-
   return R.update(currentIndex, newChar, characters)
 }
 
-const reducer = (state, action) => {
+const initialCharacters = setUpCharacters(initialText)
+export const characters = (state = initialCharacters, action) => {
   switch (action.type) {
-    case 'RECORD':
-      return R.merge(state, {
-        currentIndex: getNextIndex(state),
-        characters: addCharacter(state, action),
-      })
-    case 'START_TIMER':
-      return R.merge(state, {
-        startTime: action.startTime,
-      })
-    case 'END_TIMER':
-      return R.merge(state, {
-        endTime: action.endTime,
-      })
+    case 'RECORD': {
+      const characters = action.characters
+      return addCharacter(action.characters, action.key, action.currentIndex)
+    }
+    case 'UPDATE_SNIPPET': {
+      const { snippet } = action
+      return setUpCharacters(snippet)
+    }
     default:
       return state
   }
 }
+
+export const currentIndex = (state = 0, action) => {
+  switch (action.type) {
+    case 'RECORD':
+      const characters = action.characters
+      const currentIndex = action.currentIndex
+      return getNextIndex(characters, currentIndex)
+    case 'UPDATE_SNIPPET':
+      return 0
+    default:
+      return state
+  }
+}
+
+const startTime = (state = 0, action) => {
+  switch (action.type) {
+    case 'START_TIMER':
+      return action.startTime
+    default:
+      return state
+  }
+}
+
+const endTime = (state = 0, action) => {
+  switch (action.type) {
+    case 'END_TIMER':
+      return action.endTime
+    default:
+      return state
+  }
+}
+
+const reducer = combineReducers({
+  characters,
+  currentIndex,
+  startTime,
+  endTime,
+})
 
 export default reducer

@@ -4,25 +4,41 @@ import reducer, {
   getNextIndex,
   nextNonSpaceIndex,
   removeInitialSpaces,
+  characters,
+  currentIndex,
 } from '.'
 
 describe('reducers', () => {
   describe('addCharacter', () => {
     it('updates correct character', () => {
-      const state = {
-        characters: [
-          {},
-          {
-            character: 'x',
-          },
-          {},
-        ],
-        currentIndex: 1,
-      }
-      const action = {
-        key: 'x',
-      }
-      expect(addCharacter(state, action))
+      const characters = [
+        {},
+        {
+          character: 'x',
+        },
+        {},
+      ]
+      const key = 'x'
+      const currentIndex = 1
+      expect(addCharacter(characters, key, currentIndex))
+        .to.have.property(1)
+        .and.to.eql({
+          character: 'x',
+          status: 'correct',
+        })
+    })
+
+    it('updates enter', () => {
+      const characters = [
+        {},
+        {
+          character: 'x',
+        },
+        {},
+      ]
+      const key = 'x'
+      const currentIndex = 1
+      expect(addCharacter(characters, key, currentIndex))
         .to.have.property(1)
         .and.to.eql({
           character: 'x',
@@ -101,41 +117,63 @@ describe('reducers', () => {
 
   describe('getNextIndex', () => {
     it('returns next index', () => {
-      const state = {
-        currentIndex: 1,
-        characters: [
-          {},
-          {
-            character: 'a',
-          },
-        ],
-      }
-      const actual = getNextIndex(state)
+      const currentIndex = 1
+      const characters = [
+        {},
+        {
+          character: 'a',
+        },
+      ]
+      const actual = getNextIndex(characters, currentIndex)
       const expected = 2
       expect(actual).to.eql(expected)
     })
 
     it('jumps spaces after new lines', () => {
-      const state = {
-        currentIndex: 0,
-        characters: [
-          {
-            character: '\n',
-          },
-          {
-            character: ' ',
-          },
-          {
-            character: ' ',
-          },
-          {
-            character: 'c',
-          },
-        ],
-      }
-      const actual = getNextIndex(state)
+      const currentIndex = 0
+      const characters = [
+        {
+          character: '\n',
+        },
+        {
+          character: ' ',
+        },
+        {
+          character: ' ',
+        },
+        {
+          character: 'c',
+        },
+      ]
+      const actual = getNextIndex(characters, currentIndex)
       const expected = 3
       expect(actual).to.eql(expected)
+    })
+  })
+
+  describe('characters', () => {
+    it('updates snippet with new characters', () => {
+      const action = {
+        type: 'UPDATE_SNIPPET',
+        snippet: 't',
+      }
+      const actual = characters({}, action)
+      expect(actual).to.eql([
+        {
+          character: 't',
+        },
+      ])
+    })
+  })
+
+  describe('currentIndex', () => {
+    it('resets when updating snippet', () => {
+      const action = {
+        type: 'UPDATE_SNIPPET',
+        snippet: 't',
+      }
+      const actual = currentIndex(8, action)
+      expect(actual).to.eql(0)
     })
   })
 
@@ -156,6 +194,24 @@ describe('reducers', () => {
         endTime: 1000,
       }
       expect(reducer(state, action)).to.have.property('endTime', 1000)
+    })
+
+    it('adds character', () => {
+      const state = {}
+      const action = {
+        type: 'RECORD',
+        key: 'a',
+        currentIndex: 0,
+        characters: [
+          {
+            character: 'a',
+          },
+        ],
+      }
+      expect(reducer(state, action))
+        .to.have.property('characters')
+        .and.to.have.property(0)
+        .and.to.have.property('status', 'correct')
     })
   })
 })
