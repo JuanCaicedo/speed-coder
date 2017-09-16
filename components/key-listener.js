@@ -2,12 +2,12 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getIsFinished } from '../store/selectors'
-import { recordKey, startTimer, endTimer } from '../store'
+import { recordKey, startTimer, endTimer } from '../store/actions'
 
 class KeyListener extends React.Component {
-  handleKeyPress({ key }) {
+  handleKeyPress({ key, currentIndex }) {
     if (key) {
-      this.props.recordKey(key)
+      this.props.recordKey(key, currentIndex)
     }
   }
 

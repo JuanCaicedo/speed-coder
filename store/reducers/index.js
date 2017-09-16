@@ -26,39 +26,38 @@ export const nextNonSpaceIndex = (characters, currentIndex) => {
   return characters.indexOf(noInitalSpaces[0])
 }
 
-export const getNextIndex = state => {
-  const currentCharacter = getCurrentCharacter(state)
-  const currentIndex = getCurrentIndex(state)
-  const characters = getCharacters(state)
-
+export const getNextIndex = (characters, currentIndex) => {
+  const currentCharacter = characters[currentIndex]
   if (isNewline(currentCharacter.character)) {
     return nextNonSpaceIndex(characters, currentIndex)
   }
-  return getCurrentIndex(state) + 1
+  return currentIndex + 1
 }
 
-export const addCharacter = (state, action) => {
-  const characters = getCharacters(state)
-  const currentIndex = getCurrentIndex(state)
+export const addCharacter = (characters, action) => {
+  const { currentIndex } = action
   const pressedKey = action.key
-  const character = getCorrectCharacter(state)
+  const character = characters[currentIndex].character
   const status = keysAreEqual(pressedKey, character) ? 'correct' : 'incorrect'
 
   const newChar = {
     character,
     status,
   }
-
   return R.update(currentIndex, newChar, characters)
 }
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'RECORD':
+    case 'RECORD': {
+      const characters = getCharacters(state)
+      const currentIndex = action.currentIndex
+
       return R.merge(state, {
-        currentIndex: getNextIndex(state),
-        characters: addCharacter(state, action),
+        currentIndex: getNextIndex(characters, currentIndex),
+        characters: addCharacter(characters, action),
       })
+    }
     case 'START_TIMER':
       return R.merge(state, {
         startTime: action.startTime,

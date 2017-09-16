@@ -9,20 +9,18 @@ import reducer, {
 describe('reducers', () => {
   describe('addCharacter', () => {
     it('updates correct character', () => {
-      const state = {
-        characters: [
-          {},
-          {
-            character: 'x',
-          },
-          {},
-        ],
-        currentIndex: 1,
-      }
+      const characters = [
+        {},
+        {
+          character: 'x',
+        },
+        {},
+      ]
       const action = {
         key: 'x',
+        currentIndex: 1,
       }
-      expect(addCharacter(state, action))
+      expect(addCharacter(characters, action))
         .to.have.property(1)
         .and.to.eql({
           character: 'x',
@@ -101,39 +99,35 @@ describe('reducers', () => {
 
   describe('getNextIndex', () => {
     it('returns next index', () => {
-      const state = {
-        currentIndex: 1,
-        characters: [
-          {},
-          {
-            character: 'a',
-          },
-        ],
-      }
-      const actual = getNextIndex(state)
+      const currentIndex = 1
+      const characters = [
+        {},
+        {
+          character: 'a',
+        },
+      ]
+      const actual = getNextIndex(characters, currentIndex)
       const expected = 2
       expect(actual).to.eql(expected)
     })
 
     it('jumps spaces after new lines', () => {
-      const state = {
-        currentIndex: 0,
-        characters: [
-          {
-            character: '\n',
-          },
-          {
-            character: ' ',
-          },
-          {
-            character: ' ',
-          },
-          {
-            character: 'c',
-          },
-        ],
-      }
-      const actual = getNextIndex(state)
+      const currentIndex = 0
+      const characters = [
+        {
+          character: '\n',
+        },
+        {
+          character: ' ',
+        },
+        {
+          character: ' ',
+        },
+        {
+          character: 'c',
+        },
+      ]
+      const actual = getNextIndex(characters, currentIndex)
       const expected = 3
       expect(actual).to.eql(expected)
     })
@@ -165,11 +159,11 @@ describe('reducers', () => {
             character: 'a',
           },
         ],
-        currentIndex: 0,
       }
       const action = {
         type: 'RECORD',
         key: 'a',
+        currentIndex: 0,
       }
       expect(reducer(state, action))
         .to.have.property('characters')
