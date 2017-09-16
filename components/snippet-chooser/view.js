@@ -1,4 +1,5 @@
 import { Component } from 'react'
+import { UpdateSnippetButton } from './styles'
 const placeholderText = `console.log('hello world')`
 
 export default class SnippetChooser extends Component {
@@ -32,7 +33,9 @@ export default class SnippetChooser extends Component {
           onChange={this.handleChange}
           ref="snippet"
         />
-        <div onClick={this.handleClick}>{this.props.children}</div>
+        <UpdateSnippetButton onClick={this.handleClick}>
+          {this.props.children}
+        </UpdateSnippetButton>
       </div>
     )
   }

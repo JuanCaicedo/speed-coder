@@ -3,6 +3,7 @@ import { shallow, mount } from 'enzyme'
 import { expect as chaiExpect } from 'chai'
 import SnippetChooser from './view'
 import { mapDispatchToProps } from '.'
+import { UpdateSnippetButton } from './styles'
 
 const placeholderText = `console.log('hello world')`
 
@@ -21,7 +22,7 @@ describe('SnippetChooser', () => {
 
   it('has submit button', () => {
     const wrapper = shallow(<SnippetChooser />)
-    chaiExpect(wrapper.find('button')).to.be.present()
+    chaiExpect(wrapper.find(UpdateSnippetButton)).to.be.present()
   })
 
   it('calls onButtonClick with textarea snippet', () => {
@@ -33,7 +34,7 @@ describe('SnippetChooser', () => {
     wrapper.setState({
       snippet: 'test snippet',
     })
-    wrapper.find('button').simulate('click')
+    wrapper.find(UpdateSnippetButton).simulate('click')
     chaiExpect(onButtonClick.mock.calls[0][0]).to.eql('test snippet')
   })
 
@@ -43,7 +44,7 @@ describe('SnippetChooser', () => {
       onButtonClick,
     }
     const wrapper = shallow(<SnippetChooser {...props} />)
-    wrapper.find('button').simulate('click')
+    wrapper.find(UpdateSnippetButton).simulate('click')
     chaiExpect(onButtonClick.mock.calls[0][0]).to.eql(placeholderText)
   })
 })
