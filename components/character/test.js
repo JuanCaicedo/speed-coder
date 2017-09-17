@@ -2,11 +2,7 @@ import renderer from 'react-test-renderer'
 import Character from './view'
 import { shallow, mount } from 'enzyme'
 import { expect } from 'chai'
-import {
-  CorrectCharacter,
-  IncorrectCharacter,
-  CurrentCharacter,
-} from './styles'
+import { Correct, Incorrect, Current } from './view'
 
 describe('view', () => {
   it('should render regular character', () => {
@@ -22,7 +18,7 @@ describe('view', () => {
       isCurrent: true,
     }
     const wrapper = mount(<Character {...props} />)
-    expect(wrapper.find(CurrentCharacter)).to.be.present()
+    expect(wrapper.find(Current)).to.be.present()
   })
 
   it('should render correct character', () => {
@@ -30,7 +26,7 @@ describe('view', () => {
       status: 'correct',
     }
     const wrapper = mount(<Character {...props} />)
-    expect(wrapper.find(CorrectCharacter)).to.be.present()
+    expect(wrapper.find(Correct)).to.be.present()
   })
 
   it('should render incorrect character', () => {
@@ -38,7 +34,7 @@ describe('view', () => {
       status: 'incorrect',
     }
     const wrapper = mount(<Character {...props} />)
-    expect(wrapper.find(IncorrectCharacter)).to.be.present()
+    expect(wrapper.find(Incorrect)).to.be.present()
   })
 
   it('should render break for newline character', () => {
@@ -72,7 +68,7 @@ describe('view', () => {
     }
 
     const wrapper = mount(<Character {...props} />)
-    expect(wrapper.find(CorrectCharacter)).to.be.present()
+    expect(wrapper.find(Correct)).to.be.present()
     expect(wrapper).to.have.text(' ')
   })
 })
