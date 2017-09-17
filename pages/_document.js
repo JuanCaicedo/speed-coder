@@ -1,6 +1,5 @@
 import Document, { Head, Main, NextScript } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
-import Info from '../components/info'
 
 export default class SiteDocument extends Document {
   render() {
@@ -20,7 +19,6 @@ export default class SiteDocument extends Document {
         <body>
           <div className="root">{main}</div>
           <NextScript />
-          <Info />
         </body>
       </html>
     )

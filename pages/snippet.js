@@ -7,6 +7,7 @@ import initGlobalStyles from '../components/global'
 import Frame from '../components/frame'
 import MainButton from '../components/main-button'
 import SnippetChooser from '../components/snippet-chooser'
+import Info from '../components/info'
 import { updateSnippet } from '../store/actions'
 import { getCharactersText } from '../store/selectors'
 
@@ -34,15 +35,18 @@ class Index extends Component {
 
   render() {
     return (
-      <Frame>
-        <SnippetChooser
-          textRef={snippet => (this.snippet = snippet)}
-          snippet={this.props.snippet}
-        />
-        <MainButton onClick={this.handleClick}>
-          <a>Practice this snippet</a>
-        </MainButton>
-      </Frame>
+      <div>
+        <Frame>
+          <SnippetChooser
+            textRef={snippet => (this.snippet = snippet)}
+            snippet={this.props.snippet}
+          />
+          <MainButton onClick={this.handleClick}>
+            <a>Practice this snippet</a>
+          </MainButton>
+        </Frame>
+        <Info />
+      </div>
     )
   }
 }
