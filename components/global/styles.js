@@ -4,7 +4,7 @@ export const initGlobalStyles = () => {
   injectGlobal`
     body {
       margin: 0;
-      background-color:
+      background-color: black;
     }
   `
 }
