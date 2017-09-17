@@ -3,6 +3,7 @@ import {
   IncorrectCharacter,
   CurrentCharacter,
 } from './styles'
+import Audio from '../audio'
 
 const U_SPACE = '\u00A0'
 const SPACE = ' '
@@ -18,13 +19,31 @@ const renderCharacter = character => {
   return character
 }
 
+export const Correct = ({ character }) => (
+  <span>
+    <CorrectCharacter>{renderCharacter(character)}</CorrectCharacter>
+    <Audio file="keypress" />
+  </span>
+)
+
+export const Incorrect = ({ character }) => (
+  <span>
+    <IncorrectCharacter>{renderCharacter(character)}</IncorrectCharacter>
+    <Audio file="incorrect" />
+  </span>
+)
+
+export const Current = ({ character }) => (
+  <CurrentCharacter>{renderCharacter(character)}</CurrentCharacter>
+)
+
 const PlainCharacter = ({ isCurrent, character, status }) => {
   if (isCurrent) {
-    return <CurrentCharacter>{renderCharacter(character)}</CurrentCharacter>
+    return <Current character={character} />
   } else if (status === 'correct') {
-    return <CorrectCharacter>{renderCharacter(character)}</CorrectCharacter>
+    return <Correct character={character} />
   } else if (status === 'incorrect') {
-    return <IncorrectCharacter>{renderCharacter(character)}</IncorrectCharacter>
+    return <Incorrect character={character} />
   }
   return <span>{renderCharacter(character)}</span>
 }
