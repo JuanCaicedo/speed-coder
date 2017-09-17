@@ -20,6 +20,11 @@ export const removeInitialSpaces = (previous, character) => {
 
 export const getCurrentIndex = state => state.currentIndex
 export const getCharacters = state => state.characters
+export const getCharactersText = R.pipe(
+  R.path(['characters']),
+  R.map(getCharacter),
+  R.join('')
+)
 export const getLength = a => a.length
 export const getCurrentCharacter = createSelector(
   getCurrentIndex,

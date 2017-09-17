@@ -2,17 +2,22 @@ import React from 'react'
 import withRedux from 'next-redux-wrapper'
 import Link from 'next/link'
 import { initStore } from '../store'
-import TypingTest from '../components/typing-test'
 import initGlobalStyles from '../components/global'
+import Frame from '../components/frame'
+import MainButton from '../components/main-button'
+import TypingTest from '../components/typing-test'
 
 initGlobalStyles()
 
 export const Index = () => (
-  <TypingTest>
+  <Frame>
+    <TypingTest />
     <Link href="/snippet" prefetch>
-      <a>Change Snippet</a>
+      <MainButton>
+        <a>Change Snippet</a>
+      </MainButton>
     </Link>
-  </TypingTest>
+  </Frame>
 )
 
 export default withRedux(initStore)(Index)
