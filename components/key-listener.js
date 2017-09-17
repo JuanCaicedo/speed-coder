@@ -2,12 +2,27 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { getIsFinished } from '../store/selectors'
+import R from 'ramda'
 import {
   recordKey,
   startTimer,
   endTimer,
   backspaceCharacter,
 } from '../store/actions'
+
+const ignoreKeys = [
+  'Meta',
+  'Alt',
+  'Control',
+  'Shift',
+  'Escape',
+  'Tab',
+  'ArrowLeft',
+  'ArrowRight',
+  'ArrowUp',
+  'ArrowDown',
+]
+const shouldIgnore = R.flip(R.contains)(ignoreKeys)
 
 class KeyListener extends React.Component {
   constructor(props) {
@@ -19,7 +34,7 @@ class KeyListener extends React.Component {
     const { key, currentIndex } = e
     if (key === 'Backspace') {
       this.props.backspaceCharacter()
-    } else if (key) {
+    } else if (!shouldIgnore(key)) {
       this.props.recordKey(key, currentIndex)
     }
   }
