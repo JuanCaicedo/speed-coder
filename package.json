@@ -6,6 +6,8 @@
   "scripts": {
     "test": "jest",
     "dev": "next",
+    "build": "next build",
+    "start": "next start",
     "precommit": "lint-staged"
   },
   "keywords": [],
