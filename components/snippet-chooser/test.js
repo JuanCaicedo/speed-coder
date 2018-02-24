@@ -1,11 +1,7 @@
 import { shallow, mount } from 'enzyme'
 import { expect } from 'chai'
 import SnippetChooser from './view'
-import { mapDispatchToProps } from '.'
-import MainButton from '../main-button'
 import CodeArea from '../code-area'
-
-const placeholderText = `console.log('hello world')`
 
 describe('SnippetChooser', () => {
   it('shows text area', () => {
