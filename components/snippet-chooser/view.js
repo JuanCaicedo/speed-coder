@@ -4,15 +4,11 @@ import CodeArea from '../code-area'
 import MainButton from '../main-button'
 
 export default class SnippetChooser extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      snippet: props.snippet,
-    }
-    this.handleChange = this.handleChange.bind(this)
+  state = {
+    snippet: this.props.snippet,
   }
 
-  handleChange(event) {
+  handleChange = event => {
     this.setState({
       snippet: event.target.value,
     })
