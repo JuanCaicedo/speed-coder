@@ -1,4 +1,3 @@
-import renderer from 'react-test-renderer'
 import { shallow, mount } from 'enzyme'
 import { expect } from 'chai'
 import SnippetChooser from './view'
@@ -14,53 +13,14 @@ describe('SnippetChooser', () => {
     expect(wrapper.find(CodeArea)).to.be.present()
   })
 
-  it('shows placeholder', () => {
+  it('stores snippet in state on change', () => {
     const wrapper = shallow(<SnippetChooser />)
-    expect(wrapper.find(CodeArea))
-      .to.have.prop('placeholder')
-      .to.eql(placeholderText)
+    wrapper.simulate('change', { target: { value: 'foo' } })
+    expect(wrapper.state('snippet')).to.equal('foo')
   })
 
-  it('has submit button', () => {
-    const wrapper = shallow(<SnippetChooser />)
-    expect(wrapper.find(MainButton)).to.be.present()
-  })
-
-  it('calls onButtonClick with textarea snippet', () => {
-    const onButtonClick = jest.fn()
-    const props = {
-      onButtonClick,
-    }
-    const wrapper = mount(<SnippetChooser {...props} />)
-    wrapper.setState({
-      snippet: 'test snippet',
-    })
-    wrapper.find(MainButton).simulate('click')
-    expect(onButtonClick.mock.calls[0][0]).to.eql('test snippet')
-  })
-
-  it('calls onButtonClick with placeholder text if no snippet', () => {
-    const onButtonClick = jest.fn()
-    const props = {
-      onButtonClick,
-    }
-    const wrapper = mount(<SnippetChooser {...props} />)
-    wrapper.find(MainButton).simulate('click')
-    expect(onButtonClick.mock.calls[0][0]).to.eql(placeholderText)
-  })
-})
-
-describe('mapDispatchToProps', () => {
-  describe('onButtonClick', () => {
-    it('calls dispatch', () => {
-      const dispatch = jest.fn()
-      const { onButtonClick } = mapDispatchToProps(dispatch)
-
-      onButtonClick('test snippet')
-      expect(dispatch.mock.calls[0][0]).to.eql({
-        type: 'UPDATE_SNIPPET',
-        snippet: 'test snippet',
-      })
-    })
+  it('passes snippet to CodeArea', () => {
+    const wrapper = shallow(<SnippetChooser snippet="test-snippet" />)
+    expect(wrapper.find(CodeArea).prop('value')).to.equal('test-snippet')
   })
 })
