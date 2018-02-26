@@ -7,8 +7,7 @@
     "test": "jest",
     "dev": "next",
     "build": "next build",
-    "start": "next start",
-    "precommit": "lint-staged"
+    "start": "next start"
   },
   "engines": {
     "node": ">8.9.0"
@@ -22,6 +21,7 @@
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",
+    "react-sound": "^1.1.0",
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "reselect": "^3.0.1",
@@ -39,7 +39,6 @@
     "jest": "^20.0.4",
     "jest-cli": "^22.4.2",
     "jest-styled-components": "^4.4.1",
-    "lint-staged": "^4.0.4",
     "now": "^8.3.4",
     "prettier": "^1.6.1",
     "react-addons-test-utils": "^15.6.2",

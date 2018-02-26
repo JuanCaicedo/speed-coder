@@ -1,22 +1,28 @@
+import Sound from 'react-sound'
 import { Component } from 'react'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
 
-export default class Audio extends Component {
-  componentDidMount() {
-    const { file } = this.props
-    this.audio = new window.Audio(`static/${file}.mp3`)
-    this.audio.loop = false
-    this.audio.play()
+class Audio extends Component {
+  state = {
+    status: Sound.status.PLAYING,
   }
 
-  componentWillUnmount() {
-    // Only stop the audio if it would otherwise continue forever. This lets
-    // short audio clips finish even if we remove this component from the DOM.
-    this.audio.pause()
+  handleFinished = () => {
+    this.setState({
+      status: Sound.status.STOPPED,
+    })
   }
 
   render() {
-    return null
+    const { file } = this.props
+    const { status } = this.state
+    return (
+      <Sound
+        playStatus={status}
+        url={`static/${file}.mp3`}
+        onFinishedPlaying={this.handleFinished}
+      />
+    )
   }
 }
+
+export default Audio
